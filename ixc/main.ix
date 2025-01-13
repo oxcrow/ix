@@ -1,5 +1,10 @@
-// Driver code
+/// Aim: Generate LLVM compiled executable of this simple function.
+///
+/// While there are a million different things that can be done
+/// during compiler development, we must not forget that our aim
+/// is to generate a fully functional language.
+///
+/// Thus we must generate LLVM IR and executable as soon as possible.
 int main() {
-  // insert code here
   return 0;
 }
