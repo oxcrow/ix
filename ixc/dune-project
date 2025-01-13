@@ -1,0 +1,16 @@
+(lang dune 3.17)
+
+(name ixc)
+(generate_opam_files false)
+
+(authors "oxcrow <oxcrow@proton.me>")
+(source  (github oxcrow/ix))
+(license RESTRICTED)
+
+(package
+ (name ixc)
+ (synopsis "ix compiler.")
+ (description "high performance general purpose language compiler.")
+ (depends ocaml))
+
+; stanza docs at https://dune.readthedocs.io/en/stable/reference/dune-project/index.html

@@ -1,0 +1,1 @@
+let () = Ixc.Main.main

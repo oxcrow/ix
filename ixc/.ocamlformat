@@ -1,0 +1,6 @@
+profile = janestreet
+break-cases = all
+margin = 80
+wrap-comments = true
+line-endings = lf
+sequence-blank-line = preserve-one
