@@ -5,4 +5,5 @@
  (modules ixparser))
 
 (library
- (name ixc))
+ (name ixc)
+ (preprocess (pps ppx_deriving.show)))
