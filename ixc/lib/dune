@@ -1,2 +1,8 @@
+(ocamllex
+ (modules ixlexer))
+
+(menhir
+ (modules ixparser))
+
 (library
  (name ixc))
