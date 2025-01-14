@@ -2,10 +2,10 @@
 %}
 
 %token <string> IDVAL
-%token <int> I32VAL
-%token <float> F64VAL
+%token <int> INTVAL
+%token <float> FLOATVAL
 
-%token VOID I32 F64
+%token VOID INT FLOAT
 
 %token SEMICOLON COLON COMMA EQUAL
 %token LBRACE RBRACE LPAREN RPAREN LARROW RARROW
