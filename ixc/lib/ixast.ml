@@ -3,16 +3,17 @@ type executable = Executable of statements list
 
 and statements =
   | StatementModule of statements list * loc
-  | StatementFunction of types * id * arguments list * blocks * loc
+  | StatementFunction of types * id * blocks * loc
   | StatementStruct
   | StatementEnum
   | StatmentValue of types * id * expressions * loc
+  | StatementReturn of expressions
 [@@deriving show { with_path = false }]
 
 and expressions =
   | ExpressionOperation of expressions list * loc
   | ExpressionInvocation of id * arguments list * loc
-  | ExperssionTerminal of terminals * loc
+  | ExpressionTerminal of terminals * loc
 [@@deriving show { with_path = false }]
 
 and blocks = BlockStatement of statements list * loc
@@ -24,16 +25,16 @@ and arguments =
 [@@deriving show { with_path = false }]
 
 and terminals =
-  | TerminalInt of int * loc
-  | TerminalFloat of float * loc
-  | TerminalId of id * loc
+  | IntVal of int
+  | FloatVal of float
+  | IdVal of id
 [@@deriving show { with_path = false }]
 
 and types =
-  | Void
-  | Int
-  | Float
+  | TypeVoid
+  | TypeInt
+  | TypeFloat
 [@@deriving show { with_path = false }]
 
-and id = Id of string [@@deriving show { with_path = false }]
+and id = Id of string * loc [@@deriving show { with_path = false }]
 and loc = Loc of int * int [@@deriving show { with_path = false }]

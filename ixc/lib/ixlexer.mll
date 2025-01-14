@@ -36,4 +36,6 @@ rule token = parse
   (* Identifiers *)
   | id as lexeme { Ixparser.IDVAL(lexeme) }
 
+  (* Catch'em all! *)
+  | eof { Ixparser.EOF }
   | _ { raise (Failure ("Unknown character: " ^ Lexing.lexeme lexbuf)) }
