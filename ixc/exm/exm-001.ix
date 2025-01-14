@@ -1,0 +1,14 @@
+int main() {
+  return 0;
+}
+
+use cx::stdio as io;
+
+int main() {
+   io::printf("hello world!\n");
+   return 0;
+}
+
+T add<<T>>(T x, T y) {
+  return x+y;
+}
