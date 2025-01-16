@@ -18,7 +18,8 @@ let main =
       x
     | Ok x -> x
   in
-  print_ast ast;
+  let _ = print_ast ast in
+  let _ = Emitter.emit ast in
   ignore code;
   ignore ast;
   unit

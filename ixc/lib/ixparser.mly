@@ -29,7 +29,7 @@ statements:
 ;
 
 statement_function:
-  | t_loc=locate_node(types); i=id; LPAREN RPAREN b=blocks; { Ixast.StatementFunction (fst t_loc, i, b, snd t_loc) }
+  | tloc=locate_node(types); i=id; LPAREN RPAREN b=blocks; { Ixast.StatementFunction (fst tloc, i, b, snd tloc) }
 ;
 
 statement_return:
