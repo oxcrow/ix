@@ -42,9 +42,9 @@ and emit_function node =
 
   let _code =
     match node with
-    | Ixast.StatementFunction (types, id, _block, _) ->
-      let xtypes = convert_types types in
-      let xid = convert_id id in
+    | Ixast.StatementFunction x ->
+      let xtypes = convert_types x.typex in
+      let xid = convert_id x.id in
       let _ = emit xtypes xid "0" in
       unit
     | _ -> unit

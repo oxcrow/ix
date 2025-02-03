@@ -1,10 +1,5 @@
-type loc = Loc of int * int
-
-(* Silence annoying Location output when printing AST. *)
-let show_loc _ = ""
-let pp_loc _ _ = ()
-
-type id = Id of string * loc [@@deriving show { with_path = false }]
+type location = Location of int * int [@@deriving show { with_path = false }]
+type id = Id of string * location [@@deriving show { with_path = false }]
 
 type unop =
   | Not (* ! *)
@@ -33,27 +28,53 @@ type executable = Executable of statements list
 [@@deriving show { with_path = false }]
 
 and statements =
-  | StatementModule of statements list * loc
-  | StatementFunction of types * id * expressions * loc
+  | StatementModule of
+      { body : statements list
+      ; location : location
+      }
+  | StatementFunction of
+      { typex : types
+      ; id : id
+      ; body : expressions
+      ; location : location
+      }
   | StatementStruct
   | StatementEnum
-  | StatmentValue of types * id * expressions * loc
+  | StatmentValue of
+      { typex : types
+      ; id : id
+      ; expression : expressions
+      ; location : location
+      }
   | StatementReturn of expressions
 
 and expressions =
-  | ExpressionOperation of expressions list * loc
-  | ExpressionInvocation of id * arguments list * loc
-  | ExpressionTerminal of terminals * loc
-  | ExpressionBlock of statements list * loc
+  | ExpressionOperation of
+      { expressions : expressions list
+      ; location : location
+      }
+  | ExpressionInvocation of
+      { id : id
+      ; arguments : arguments list
+      ; location : location
+      }
+  | ExpressionTerminal of
+      { terminal : terminals
+      ; location : location
+      }
+  | ExpressionBlock of
+      { body : statements list
+      ; location : location
+      }
 
 and arguments =
-  | ArgumentDefinition of types * id * loc
-  | ArgumentInvocation of expressions list * loc
+  | ArgumentDefinition of types * id * location
+  | ArgumentInvocation of expressions list * location
 
 and terminals =
-  | IntVal of int
-  | FloatVal of float
-  | IdVal of id
+  | IntVal of { value : int }
+  | FloatVal of { value : float }
+  | IdVal of { value : id }
 
 and types =
   | TypeVoid
