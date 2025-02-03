@@ -11,7 +11,7 @@ type executable = Executable of statements list
 
 and statements =
   | StatementModule of statements list * loc
-  | StatementFunction of types * id * blocks * loc
+  | StatementFunction of types * id * expressions * loc
   | StatementStruct
   | StatementEnum
   | StatmentValue of types * id * expressions * loc
@@ -21,8 +21,7 @@ and expressions =
   | ExpressionOperation of expressions list * loc
   | ExpressionInvocation of id * arguments list * loc
   | ExpressionTerminal of terminals * loc
-
-and blocks = BlockStatement of statements list * loc
+  | ExpressionBlock of statements list * loc
 
 and arguments =
   | ArgumentDefinition of types * id * loc

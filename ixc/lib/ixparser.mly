@@ -45,7 +45,7 @@ expression_terminal:
 ;
 
 blocks:
-  | loc=locate; LBRACE sl=list(statements); RBRACE { Ixast.BlockStatement (sl, loc) }
+  | loc=locate; LBRACE sl=list(statements); RBRACE { Ixast.ExpressionBlock (sl, loc) }
 ;
 
 arguments:
