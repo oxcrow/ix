@@ -7,10 +7,11 @@
 
 %token VOID INT FLOAT
 
-%token SEMICOLON COLON COMMA
+%token SEMICOLON COLONCOLON COLON COMMA
 %token LBRACE RBRACE LPAREN RPAREN LANGLE RANGLE LARROW RARROW
 %token ADD SUB MUL DIV EXP
 %token NOT OR AND EQ EQEQ NE LT GT LE GE EX
+%token USE
 %token RETURN
 
 %token EOF
@@ -29,6 +30,7 @@ statements:
   | s=statement_function; { s }
   | s=statement_value; { s }
   | s=statement_return; { s }
+  | s=statement_use; { s }
 ;
 
 statement_function:
@@ -44,8 +46,17 @@ statement_return:
   | RETURN e=expressions; SEMICOLON { Ixast.StatementReturn (e) }
 ;
 
+statement_use:
+  | USE ploc=locate_node(path); SEMICOLON { Ixast.StatementUse ({path=fst ploc; location=snd ploc}) }
+;
+
 expressions:
+  | e=expression_function; { e }
   | e=expression_terminal; { e }
+;
+
+expression_function:
+ | ploc=locate_node(path); LPAREN al=separated_list(COMMA,argument_invocation); RPAREN { Ixast.ExpressionFunction ({path=fst ploc;arguments=al; location=snd ploc}) }
 ;
 
 expression_terminal:
@@ -56,13 +67,23 @@ blocks:
   | loc=locate; LBRACE sl=list(statements); RBRACE { Ixast.ExpressionBlock ({body=sl; location=loc}) }
 ;
 
+path:
+  | il=separated_nonempty_list(COLONCOLON, id); { il }
+;
+
 arguments:
   | a=argument_definition; { a }
+  | a=argument_invocation; { a }
 ;
 
 argument_definition:
-  | loc=locate; t=types; i=id; { Ixast.ArgumentDefinition (t, i, loc) }
+  | loc=locate; t=types; i=id; { Ixast.ArgumentDefinition ({typex=t; id=i; location=loc}) }
 ;
+
+argument_invocation:
+  | loc=locate; e=expressions; { Ixast.ArgumentInvocation ({expressions=e; location=loc}) }
+;
+
 
 terminals:
   | x=INTVAL; { Ixast.IntVal ({value=x})}

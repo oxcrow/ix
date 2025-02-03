@@ -47,14 +47,18 @@ and statements =
       ; location : location
       }
   | StatementReturn of expressions
+  | StatementUse of
+      { path : id list
+      ; location : location
+      }
 
 and expressions =
   | ExpressionOperation of
       { expressions : expressions list
       ; location : location
       }
-  | ExpressionInvocation of
-      { id : id
+  | ExpressionFunction of
+      { path : id list
       ; arguments : arguments list
       ; location : location
       }
@@ -68,8 +72,15 @@ and expressions =
       }
 
 and arguments =
-  | ArgumentDefinition of types * id * location
-  | ArgumentInvocation of expressions list * location
+  | ArgumentDefinition of
+      { typex : types
+      ; id : id
+      ; location : location
+      }
+  | ArgumentInvocation of
+      { expressions : expressions
+      ; location : location
+      }
 
 and terminals =
   | IntVal of { value : int }

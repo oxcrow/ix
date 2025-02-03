@@ -21,6 +21,7 @@ rule token = parse
   | "float" { Ixparser.FLOAT }
 
   | ";" { Ixparser.SEMICOLON}
+  | "::" { Ixparser.COLONCOLON }
   | ":" { Ixparser.COLON}
   | "," { Ixparser.COMMA }
   | "{" { Ixparser.LBRACE }
@@ -49,6 +50,7 @@ rule token = parse
   | "+<=" { Ixparser.LE }
   | "+>=" { Ixparser.GE }
 
+  | "use" { Ixparser.USE }
   | "return" { Ixparser.RETURN}
 
   (* Identifiers *)
