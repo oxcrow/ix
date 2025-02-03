@@ -20,7 +20,7 @@
 
 executable:
   | EOF { Ixast.Executable [] }
-  | sl=statements; { Ixast.Executable [sl] }
+  | sl=nonempty_list(statements); EOF { Ixast.Executable sl }
 ;
 
 statements:
