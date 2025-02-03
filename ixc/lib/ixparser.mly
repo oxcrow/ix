@@ -27,12 +27,17 @@ executable:
 
 statements:
   | s=statement_function; { s }
+  | s=statement_value; { s }
   | s=statement_return; { s }
 ;
 
 statement_function:
   | tloc=locate_node(types); i=id; LPAREN RPAREN b=blocks;
     { Ixast.StatementFunction ({typex=fst tloc; id=i; body=b; location=snd tloc}) }
+;
+
+statement_value:
+  | tloc=locate_node(types); i=id; EQ e=expressions; SEMICOLON { Ixast.StatementValue ({typex=fst tloc; id=i; expression=e; location=snd tloc}) }
 ;
 
 statement_return:

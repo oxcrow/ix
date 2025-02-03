@@ -40,7 +40,7 @@ and statements =
       }
   | StatementStruct
   | StatementEnum
-  | StatmentValue of
+  | StatementValue of
       { typex : types
       ; id : id
       ; expression : expressions

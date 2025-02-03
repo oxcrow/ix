@@ -6,5 +6,6 @@
 ///
 /// Thus we must generate LLVM IR and executable as soon as possible.
 int main() {
+  int x = 0;
   return 0;
 }
