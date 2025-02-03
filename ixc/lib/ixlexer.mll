@@ -3,7 +3,7 @@ let newline = ['\r''\n'] | "\r\n"
 let digit = ['0'-'9']['0'-'9']*
 let integer = ['-''+']? digit
 let float = ['-''+']? digit ['.'] digit
-let id = ['a'-'z''A'-'Z''_']['a'-'z''A'-'Z''0'-'9']*
+let id = ['a'-'z''A'-'Z''_']['a'-'z''A'-'Z''0'-'9''_']*
 let comment = "//"[^'\n']*newline
 
 rule token = parse
