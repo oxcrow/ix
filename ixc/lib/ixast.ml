@@ -6,6 +6,29 @@ let pp_loc _ _ = ()
 
 type id = Id of string * loc [@@deriving show { with_path = false }]
 
+type unop =
+  | Not (* ! *)
+  | Pos (* + *)
+  | Neg (* - *)
+[@@deriving show { with_path = false }]
+
+type binop =
+  | Or (* || *)
+  | And (* && *)
+  | Eq (* = *)
+  | EqEq (* == *)
+  | Ne (* != *)
+  | Lt (* +< *)
+  | Gt (* +> *)
+  | Le (* +<= *)
+  | Ge (* +>= *)
+  | Add (* + *)
+  | Sub (* - *)
+  | Mul (* * *)
+  | Div (* / *)
+  | Exp (* ** *)
+[@@deriving show { with_path = false }]
+
 type executable = Executable of statements list
 [@@deriving show { with_path = false }]
 

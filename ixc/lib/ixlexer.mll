@@ -23,13 +23,31 @@ rule token = parse
   | ";" { Ixparser.SEMICOLON}
   | ":" { Ixparser.COLON}
   | "," { Ixparser.COMMA }
-  | "=" { Ixparser.EQUAL }
   | "{" { Ixparser.LBRACE }
   | "}" { Ixparser.RBRACE }
   | "(" { Ixparser.LPAREN }
   | ")" { Ixparser.RPAREN }
-  | "<<" {Ixparser.LARROW }
-  | ">>" {Ixparser.RARROW }
+  | "<" { Ixparser.LANGLE }
+  | ">" { Ixparser.RANGLE }
+  | "<-" { Ixparser.LARROW }
+  | "->" { Ixparser.RARROW }
+
+  | "+" { Ixparser.ADD }
+  | "-" { Ixparser.SUB }
+  | "*" { Ixparser.MUL }
+  | "/" { Ixparser.DIV }
+  | "**" { Ixparser.EXP }
+
+  | "!" { Ixparser.NOT }
+  | "||" { Ixparser.OR }
+  | "&&" { Ixparser.AND }
+  | "=" { Ixparser.EQ }
+  | "==" { Ixparser.EQEQ }
+  | "!=" { Ixparser.NE }
+  | "+<" { Ixparser.LT }
+  | "+>" { Ixparser.GT }
+  | "+<=" { Ixparser.LE }
+  | "+>=" { Ixparser.GE }
 
   | "return" { Ixparser.RETURN}
 
