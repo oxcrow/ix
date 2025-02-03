@@ -1,5 +1,5 @@
 let whitespace = [' ''\t']
-let newline = ['\n']
+let newline = ['\r''\n'] | "\r\n"
 let digit = ['0'-'9']['0'-'9']*
 let integer = ['-''+']? digit
 let float = ['-''+']? digit ['.'] digit
