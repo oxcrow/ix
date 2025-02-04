@@ -1,16 +1,10 @@
 let unit = ()
 let write line = print_endline line
+let unwrap_result result = Error.unwrap_result result
 let header = write " * ix *\n"
 
 (** Print Ix AST for debugging. *)
 let print_ast (ast : Ixast.executable) = write (" + " ^ Ixast.show_executable ast ^ "\n")
-
-(** Unwrap result or crash *)
-let unwrap_result x =
-  match x with
-  | Ok y -> y
-  | Error _ -> failwith "Unwrap failed!"
-;;
 
 (** Extract string value from toml table *)
 let get_toml_string config x = Otoml.find_result config Otoml.get_string x
