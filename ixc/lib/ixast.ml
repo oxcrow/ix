@@ -24,8 +24,7 @@ type binop =
   | Exp (* ** *)
 [@@deriving show { with_path = false }]
 
-type executable = Executable of statements list
-[@@deriving show { with_path = false }]
+type executable = Executable of statements list [@@deriving show { with_path = false }]
 
 and statements =
   | StatementModule of

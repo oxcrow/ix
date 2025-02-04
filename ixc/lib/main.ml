@@ -3,9 +3,7 @@ let write line = print_endline line
 let header = write " * ix *\n"
 
 (** Print Ix AST for debugging. *)
-let print_ast (ast : Ixast.executable) =
-  write (" + " ^ Ixast.show_executable ast ^ "\n")
-;;
+let print_ast (ast : Ixast.executable) = write (" + " ^ Ixast.show_executable ast ^ "\n")
 
 (** Unwrap result or crash *)
 let unwrap_result x =
