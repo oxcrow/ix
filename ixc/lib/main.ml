@@ -14,12 +14,15 @@ let main =
   header;
   let config = Otoml.Parser.from_file "ix.toml" in
   let name = get_toml_string config [ "src"; "name" ] |> unwrap_result in
+  write (" + Compiling: " ^ name);
+
   let code = File.read_file_content "main.ix" in
   let ast = Parser.parse code |> unwrap_result in
-  write (" + Compiling: " ^ name);
-  print_ast ast;
+  let mi = Interface.create_module_interface ast |> unwrap_result in
+
   ignore config;
   ignore code;
   ignore ast;
+  ignore mi;
   unit
 ;;

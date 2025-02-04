@@ -50,6 +50,7 @@ and statements =
       { path : id list
       ; location : location
       }
+  | StatementNone
 
 and expressions =
   | ExpressionOperation of
