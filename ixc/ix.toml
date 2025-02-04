@@ -1,0 +1,8 @@
+[src]
+name = "ixdev"
+version = "0.0.1"
+
+[dev]
+debug = "-g3"
+optimise = "-O0"
+backend = "llvm"
