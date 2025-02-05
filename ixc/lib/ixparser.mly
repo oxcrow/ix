@@ -7,7 +7,7 @@
 
 %token VOID INT FLOAT
 
-%token SEMICOLON COLONCOLON COLON COMMA
+%token DOT SEMICOLON COLONCOLON COLON COMMA
 %token LBRACE RBRACE LPAREN RPAREN LANGLE RANGLE LARROW RARROW
 %token ADD SUB MUL DIV EXP
 %token NOT OR AND EQ EQEQ NE LT GT LE GE EX
@@ -68,7 +68,7 @@ blocks:
 ;
 
 path:
-  | il=separated_nonempty_list(COLONCOLON, id); { il }
+  | il=separated_nonempty_list(DOT, id); { il }
 ;
 
 arguments:
@@ -115,4 +115,3 @@ let locate_node(node) == data=node; {
     let loc = Ixast.Location(lnum, cnum) in
     (data, loc)
 }
-

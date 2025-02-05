@@ -20,6 +20,7 @@ rule token = parse
   | "int" { Ixparser.INT }
   | "float" { Ixparser.FLOAT }
 
+  | "." { Ixparser.DOT }
   | ";" { Ixparser.SEMICOLON}
   | "::" { Ixparser.COLONCOLON }
   | ":" { Ixparser.COLON}

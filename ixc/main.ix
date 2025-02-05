@@ -14,6 +14,6 @@ use core;
 
 int main() {
   int x = 0;
-  int y = core::add(x,x);
+  int y = core.add(x,x);
   return y;
 }
