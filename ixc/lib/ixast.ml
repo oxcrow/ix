@@ -1,4 +1,5 @@
 type location = Location of int * int [@@deriving show { with_path = false }]
+type comment = Comment of string [@@deriving show { with_path = false }]
 type id = Id of string * location [@@deriving show { with_path = false }]
 
 type unop =
@@ -48,6 +49,10 @@ and statements =
   | StatementReturn of expressions
   | StatementUse of
       { path : id list
+      ; location : location
+      }
+  | StatementComment of
+      { comment : comment
       ; location : location
       }
   | StatementNone

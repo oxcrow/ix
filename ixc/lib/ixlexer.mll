@@ -8,7 +8,7 @@ let comment = "//"[^'\n']*newline
 
 rule token = parse
   (* Simple symbols *)
-  | comment { Lexing.new_line lexbuf; token lexbuf }
+  | comment as lexeme { Ixparser.COMMENTVAL (lexeme)}
   | newline { Lexing.new_line lexbuf; token lexbuf }
   | whitespace { token lexbuf }
 

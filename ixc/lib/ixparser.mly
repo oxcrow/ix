@@ -1,6 +1,7 @@
 %{
 %}
 
+%token <string> COMMENTVAL
 %token <string> IDVAL
 %token <int> INTVAL
 %token <float> FLOATVAL
@@ -31,6 +32,7 @@ statements:
   | s=statement_value; { s }
   | s=statement_return; { s }
   | s=statement_use; { s }
+  | s=statement_comment; { s }
 ;
 
 statement_function:
@@ -48,6 +50,10 @@ statement_return:
 
 statement_use:
   | USE ploc=locate_node(path); SEMICOLON { Ixast.StatementUse ({path=fst ploc; location=snd ploc}) }
+;
+
+statement_comment:
+  | cloc=locate_node(COMMENTVAL); { Ixast.StatementComment ({comment=Comment(fst cloc); location=snd cloc})}
 ;
 
 expressions:
