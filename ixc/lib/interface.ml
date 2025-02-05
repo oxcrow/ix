@@ -13,16 +13,23 @@ type interfaces =
       ; enums : interfaces list
       }
   | InterfaceFunction of { path : string list }
-  | InterfaceUse of { path : Ixast.id list list }
+  | InterfaceUse of { path : string list list }
   | None
 [@@deriving show]
 
 let create_statement_use_interface ast =
   let accessor = Walker.get_statement_use in
   let nodes = Walker.walk_ixast_nodes accessor ast in
+  let extract_id_path node =
+    match node with
+    | Ixast.Id (path, _) -> path
+  in
   let extract_use_path node =
     match node with
-    | Ixast.StatementUse x -> x.path
+    | Ixast.StatementUse x ->
+      let paths = x.path in
+      let paths = paths |> List.map extract_id_path in
+      paths
     | _ -> failwith "Impossible"
   in
   let extract use_nodes =
