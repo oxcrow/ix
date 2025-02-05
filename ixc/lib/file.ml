@@ -5,5 +5,6 @@ let read_file_content filename : string =
   let file = open_in_bin filename in
   let file_length = in_channel_length file in
   let content = really_input_string file file_length in
+  close_in file;
   content
 ;;
