@@ -23,3 +23,13 @@ using u64 = uint64_t;
 /// Moreover u64 *will* harm cache efficiency if used without care.
 /// Thus we use this 32 bit code when we can.
 using u32 = uint32_t;
+
+/// Smaller integer types for more efficiency in certain cases
+/// Such as when we know that for Tokens lexed from our code we can
+/// assume that the length of the identifiers will never be larger
+/// than 255 thus we can represent them as u8 integers.
+/// Use them only when appropriate.
+using u16 = uint16_t;
+
+/// Smol integer
+using u8 = uint8_t;
