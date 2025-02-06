@@ -1,58 +1,64 @@
 let unit = ()
+let nil = []
+
+(* reserved keywords and tokens to help emit code *)
+let semicolon = ";"
 let space = " "
 let tab = "    "
+let return = "return"
 
-let convert_types types =
+let string_of_types types =
   match types with
   | Ixast.TypeVoid -> "void"
-  | Ixast.TypeInt -> "i32"
-  | Ixast.TypeFloat -> "f64"
+  | Ixast.TypeInt -> "int"
+  | Ixast.TypeFloat -> "float"
 ;;
 
-let convert_id id =
+let string_of_id id =
   match id with
-  | Ixast.Id (id, _) -> "@" ^ id
+  | Ixast.Id (id, _) -> id
 ;;
 
-let rec emit ast =
-  match ast with
-  | Ixast.Executable statements -> List.map emit_statement statements
-
-and emit_statement node =
-  let code =
-    match node with
-    | Ixast.StatementFunction _ -> emit_function node
-    | _ -> unit
-  in
+let emit_return node =
   ignore node;
-  code
+  nil
+;;
 
-and emit_function node =
-  let emit types id return_code =
+let emit_function node =
+  let emit type' id return_code =
     let code =
-      [ "define" ^ space ^ types ^ space ^ id ^ "()" ^ space ^ "{"
-      ; tab ^ ";; code here ..."
-      ; tab ^ "ret" ^ space ^ types ^ space ^ return_code
+      [ type' ^ space ^ id ^ "()" ^ space ^ "{"
+      ; tab ^ return ^ space ^ return_code ^ semicolon
       ; "}"
       ]
     in
-    let _ = List.iter print_endline code in
-    unit
+    code
   in
-
-  let _code =
+  let code =
     match node with
     | Ixast.StatementFunction x ->
-      let xtypes = convert_types x.typex in
-      let xid = convert_id x.id in
-      let _ = emit xtypes xid "0" in
-      unit
-    | _ -> unit
+      let xtypes = string_of_types x.typex in
+      let xid = string_of_id x.id in
+      let code = emit xtypes xid "0" in
+      code
+    | _ -> nil
   in
-  ignore node;
-  unit
+  code
+;;
 
-and emit_return node =
-  ignore node;
-  unit
+let emit_statement node =
+  let code =
+    match node with
+    | Ixast.StatementFunction _ -> emit_function node
+    | _ -> nil
+  in
+  code
+;;
+
+let emit ast =
+  let code =
+    match ast with
+    | Ixast.Executable statements -> List.map emit_statement statements
+  in
+  Ok code
 ;;
