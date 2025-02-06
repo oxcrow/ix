@@ -1,0 +1,10 @@
+/// Aim: Implement a high performance lexer and parser.
+///
+/// We are starting from scratch again and without any external
+/// libraries for generating our lexers and parsers, thus we are
+/// all on our own now.
+///
+/// May Vishnu bless me.
+int main() {
+  return 0;
+}
