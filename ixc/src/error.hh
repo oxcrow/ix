@@ -1,6 +1,5 @@
 #pragma once
 #include "base.hh"
-#include "owned.hh"
 
 /// Error state for propagating errors.
 ///
@@ -8,12 +7,8 @@
 /// and using it to both check for errors, propagating errors up the
 /// call stack, and crash at the end.
 struct Error {
-    usize code = 0;
-    Owned<char *> message;
-    Owned<char *> location;
+    u32 code = 0;
     bool isOk() const;
     bool isError() const;
-    Error set(usize errorCode);
-    Error setMessage(const char *errorMessage);
-    Error setLocation(const char *errorLocation);
+    Error setCode(u32 errorCode);
 };

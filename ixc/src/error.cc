@@ -8,15 +8,7 @@ bool Error::isError() const {
     return ! isOk();
 }
 
-Error Error::set(usize errorCode) {
+Error Error::setCode(u32 errorCode) {
     code = errorCode;
-    return *this;
-}
-
-Error Error::setMessage(const char * errorMessage) {
-    return *this;
-}
-
-Error Error::setLocation(const char * errorLocation) {
     return *this;
 }
