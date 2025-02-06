@@ -5,6 +5,6 @@
 /// all on our own now.
 ///
 /// May Vishnu bless me.
-int main() {
+fn int main() {
   return 0;
 }
