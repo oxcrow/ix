@@ -14,4 +14,12 @@
 /// The largest integer size that we will use to generate our
 /// identifiers and indices for our AST nodes and iterations.
 /// For now a 64 bit unsigned integer will be enough.
-using usize = uint64_t;
+using u64 = uint64_t;
+
+/// The standard integer size consisting 32 bits
+/// While it maybe more easier to use u64 everywhere it is also
+/// going to consume excessive memory consumption because each u64
+/// is 64 bytes and we do not need 64 bytes for everything.
+/// Moreover u64 *will* harm cache efficiency if used without care.
+/// Thus we use this 32 bit code when we can.
+using u32 = uint32_t;
