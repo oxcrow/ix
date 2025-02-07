@@ -15,6 +15,7 @@ add_compile_options(-Wall)
 add_compile_options(-Wextra)
 add_compile_options(-Wno-unused-variable)
 add_compile_options(-Wno-unused-parameter)
+add_compile_options(-Wno-missing-field-initializers)
 
 if (${mode} EQUAL 0)
     message ("-- Enabling RELEASE mode")

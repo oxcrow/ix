@@ -2,6 +2,8 @@
 
 #include <stdlib.h>
 #include "base.hh"
+//
+#include <utility>
 
 /// Owned pointer that will be freed at the end of scope
 ///
@@ -11,7 +13,10 @@
 template<typename T>
 struct Owned {
     T *data;
+    Owned() {}
     ~Owned();
+    Owned(const Owned &other) : data(other.data) {}
+    Owned(const Owned &&other) : data(std::move(other.data)) {}
     void malloc(uint64_t n);
     void free();
 };

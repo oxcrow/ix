@@ -6,5 +6,5 @@
 ///
 /// May Vishnu bless me.
 fn main() {
-	writeln("hello world")
+	writeln("hello world") ...
 }

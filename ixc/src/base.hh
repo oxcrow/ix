@@ -1,9 +1,12 @@
 #pragma once
+#include <assert.h>
 #include <stdint.h>
 
 #define IXC_VERSION_MAJOR    0
 #define IXC_VERSION_MINOR    0
 #define IXC_VERSION_REVISION 1
+
+#define ensure(code) assert((code));
 
 /// Using a macro indirection allows us to later switch out printf
 /// with something else such as sprintf or fprintf depending on our
