@@ -1,11 +1,5 @@
-/// Aim: Develop a hyper efficient incremental compiler.
-///
-/// I'm fucking tired of restarting from scratch again and again.
-/// This time I vow to finish my compiler without giving up.
-/// I vow to make Ix the best language in the world.
-///
-/// May God Vishnu bless me.
-///
+// Aim: Develop an efficient compiler.
+
 fn main() {
 	write("hello world\n")
 }

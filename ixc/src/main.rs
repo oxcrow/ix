@@ -8,11 +8,23 @@
 use anyhow::ensure;
 use anyhow::Result;
 
+mod frontend;
+
 fn header() {
 	println!("* ix *");
 }
 
 fn main() -> Result<()> {
+	use crate::frontend::lexer::lex;
 	header();
+
+	let code = std::fs::read_to_string("src/main.ix")?;
+	let mut code = &code[0..];
+
+	while !code.is_empty() {
+		let (tokens, xcode) = lex::lex_line(&code)?;
+		code = xcode;
+	}
+
 	Ok(())
 }
