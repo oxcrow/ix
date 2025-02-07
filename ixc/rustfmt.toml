@@ -1,0 +1,21 @@
+# never use tabs
+hard_tabs = true
+# number of spaces to use per tab
+tab_spaces = 4
+# always use unix line endings
+newline_style = "Unix"
+
+# maximum width of each line of code
+max_width = 100
+# maximum width of a chain
+chain_width = 100
+# maximum width of a function call
+fn_call_width = 100
+
+# maximum width of an array literal
+array_width = 100
+# maximum width of function-like attributes
+attr_fn_like_width = 100
+
+# include a leading pipe on match arms (like ocaml)
+match_arm_leading_pipes = "Always"
