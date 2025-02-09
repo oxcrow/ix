@@ -6,13 +6,13 @@
 %token <int> INTVAL
 %token <float> FLOATVAL
 
-%token VOID INT FLOAT
+%token UNIT INT FLOAT
 
-%token DOT SEMICOLON COLONCOLON COLON COMMA
+%token USE LET FN STRUCT ENUM MACRO
+%token DOT NEWLINE SEMICOLON COLONCOLON COLON COMMA
 %token LBRACE RBRACE LPAREN RPAREN LANGLE RANGLE LARROW RARROW
 %token ADD SUB MUL DIV EXP
 %token NOT OR AND EQ EQEQ NE LT GT LE GE EX
-%token USE
 %token RETURN
 
 %token EOF
@@ -30,26 +30,30 @@ executable:
 statements:
   | s=statement_function; { s }
   | s=statement_value; { s }
+  | s=statement_assign; { s }
   | s=statement_return; { s }
   | s=statement_use; { s }
   | s=statement_comment; { s }
 ;
 
 statement_function:
-  | tloc=locate_node(types); i=id; LPAREN RPAREN b=blocks;
-    { Ixast.StatementFunction ({typex=fst tloc; id=i; body=b; location=snd tloc}) }
+  | loc=locate_node(FN); i=id; LPAREN al=separated_list(COMMA, argument_definition); RPAREN t=option(types_definition); b=blocks; { Ixast.StatementFunction ({id=i; typex=t; arguments=al; body=b; location=snd loc}) }
 ;
 
 statement_value:
-  | tloc=locate_node(types); i=id; EQ e=expressions; SEMICOLON { Ixast.StatementValue ({typex=fst tloc; id=i; expression=e; location=snd tloc}) }
+  | loc=locate_node(LET); i=separated_list(COMMA,id); t=option(types_definition); EQ e=expressions; SEMICOLON? { Ixast.StatementValue ({id=i; typex=t; expression=e; location=snd loc}) }
+;
+
+statement_assign:
+  | iloc=locate_node(id); EQ e=expressions; SEMICOLON? { Ixast.StatementAssign ({id=fst iloc; expression=e; location=snd iloc}) }
 ;
 
 statement_return:
-  | RETURN e=expressions; SEMICOLON { Ixast.StatementReturn (e) }
+  | RETURN e=expressions; SEMICOLON? { Ixast.StatementReturn (e) }
 ;
 
 statement_use:
-  | USE ploc=locate_node(path); SEMICOLON { Ixast.StatementUse ({path=fst ploc; location=snd ploc}) }
+  | USE ploc=locate_node(path); SEMICOLON? { Ixast.StatementUse ({path=fst ploc; location=snd ploc}) }
 ;
 
 statement_comment:
@@ -83,7 +87,7 @@ arguments:
 ;
 
 argument_definition:
-  | loc=locate; t=types; i=id; { Ixast.ArgumentDefinition ({typex=t; id=i; location=loc}) }
+  | loc=locate; il=separated_nonempty_list(COMMA,id); COLON? t=types; { Ixast.ArgumentDefinition ({typex=t; id=il; location=loc}) }
 ;
 
 argument_invocation:
@@ -97,8 +101,12 @@ terminals:
   | x=id; { Ixast.IdVal ({value=x})}
 ;
 
+types_definition:
+  | COLON? t=types; { t }
+;
+
 types:
-  | VOID { Ixast.TypeVoid }
+  | LPAREN RPAREN { Ixast.TypeUnit }
   | INT { Ixast.TypeInt }
   | FLOAT { Ixast.TypeFloat }
 ;

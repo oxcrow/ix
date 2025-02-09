@@ -16,9 +16,17 @@ rule token = parse
   | integer as lexeme { Ixparser.INTVAL(int_of_string lexeme) }
   | float as lexeme { Ixparser.FLOATVAL(float_of_string lexeme) }
 
-  | "void" { Ixparser.VOID }
   | "int" { Ixparser.INT }
   | "float" { Ixparser.FLOAT }
+
+  | "use" { Ixparser.USE }
+  | "let" { Ixparser.LET }
+  | "fn" { Ixparser.FN }
+  | "struct" { Ixparser.STRUCT }
+  | "enum" { Ixparser.ENUM }
+  | "macro" { Ixparser.MACRO }
+
+  | "return" { Ixparser.RETURN}
 
   | "." { Ixparser.DOT }
   | ";" { Ixparser.SEMICOLON}
@@ -51,8 +59,6 @@ rule token = parse
   | "+<=" { Ixparser.LE }
   | "+>=" { Ixparser.GE }
 
-  | "use" { Ixparser.USE }
-  | "return" { Ixparser.RETURN}
 
   (* Identifiers *)
   | id as lexeme { Ixparser.IDVAL(lexeme) }

@@ -17,17 +17,14 @@ let main =
   header;
   let config = Otoml.Parser.from_file "ix.toml" in
   let name = get_toml_string config [ "src"; "name" ] |> unwrap in
+  let file = "main.ix" in
 
-  let code = File.read_file_content "main.ix" in
+  let code = File.read_file_content file in
   let ast = Parser.parse code |> unwrap in
-  let asm = Emitter.emit ast |> unwrap in
-
-  print_asm asm;
 
   ignore config;
   ignore name;
   ignore code;
   ignore ast;
-  ignore asm;
   unit
 ;;

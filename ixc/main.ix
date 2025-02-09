@@ -10,10 +10,7 @@
 //
 // Thus we must develop the compiler passses before emiting LLVM IR.
 
-use core
-
 fn main() {
-  let x = 0
-  let y = core.add(x, x)
-  return y
+	let x = 0
+	let y = 1
 }

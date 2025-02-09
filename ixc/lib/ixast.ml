@@ -33,16 +33,22 @@ and statements =
       ; location : location
       }
   | StatementFunction of
-      { typex : types
-      ; id : id
+      { id : id
+      ; typex : types option
+      ; arguments : arguments list
       ; body : expressions
       ; location : location
       }
   | StatementStruct
   | StatementEnum
   | StatementValue of
-      { typex : types
-      ; id : id
+      { id : id list
+      ; typex : types option
+      ; expression : expressions
+      ; location : location
+      }
+  | StatementAssign of
+      { id : id
       ; expression : expressions
       ; location : location
       }
@@ -78,8 +84,8 @@ and expressions =
 
 and arguments =
   | ArgumentDefinition of
-      { typex : types
-      ; id : id
+      { id : id list
+      ; typex : types
       ; location : location
       }
   | ArgumentInvocation of
@@ -93,6 +99,6 @@ and terminals =
   | IdVal of { value : id }
 
 and types =
-  | TypeVoid
+  | TypeUnit
   | TypeInt
   | TypeFloat
