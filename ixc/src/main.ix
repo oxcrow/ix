@@ -1,0 +1,10 @@
+// Aim: Implement an extremely fast incremental compiler.
+//
+// The intention of this branch is educational.
+// I want to become better in coding C.
+//
+// May God Vishnu bless me.
+//
+fn main() {
+	write("hello world")
+}
