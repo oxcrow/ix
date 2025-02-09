@@ -1,19 +1,19 @@
-/// Aim: Generate compiler passes for this simple function.
-///
-/// While there are a million different things that can be done
-/// during compiler development, we must not forget that our aim
-/// is to generate a fully functional language.
-///
-/// Thus we must implement our code in scalable way from the start.
-/// This is only possible if our compiler architechture supports
-/// fast dependency analysis, incremental compilation, etc.
-///
-/// Thus we must develop the compiler passses before emiting LLVM IR.
+// Aim: Generate compiler passes for this simple function.
+//
+// While there are a million different things that can be done
+// during compiler development, we must not forget that our aim
+// is to generate a fully functional language.
+//
+// Thus we must implement our code in scalable way from the start.
+// This is only possible if our compiler architechture supports
+// fast dependency analysis, incremental compilation, etc.
+//
+// Thus we must develop the compiler passses before emiting LLVM IR.
 
-use core;
+use core
 
-int main() {
-  int x = 0;
-  int y = core.add(x,x);
-  return y;
+fn main() {
+  let x = 0
+  let y = core.add(x, x)
+  return y
 }
