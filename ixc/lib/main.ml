@@ -22,6 +22,8 @@ let main =
   let code = File.read_file_content file in
   let ast = Parser.parse code |> unwrap in
 
+  print_ast ast;
+
   ignore config;
   ignore name;
   ignore code;

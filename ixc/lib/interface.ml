@@ -13,7 +13,7 @@ let print_statement_node_list nodes = print_ast_node_list nodes Ixast.show_state
   compilation system can access the data easily and use it to
   accelerate and parallelise our compilation.
 
-  The idea is to simplify our work later on. *)
+  The idea is to simplify our work later on. */)
 type interfaces =
   | InterfaceModule of
       { uses : interfaces list
@@ -59,3 +59,4 @@ let create_module_interface ast =
   let mi = InterfaceModule { uses = ui; functions = []; structs = []; enums = [] } in
   Ok mi
 ;;
+*)

@@ -29,24 +29,34 @@ type executable = Executable of statements list [@@deriving show { with_path = f
 
 and statements =
   | StatementModule of
-      { body : statements list
+      { id : id
+      ; scope : scope
+      ; body : expressions
       ; location : location
       }
   | StatementFunction of
       { id : id
-      ; typex : types option
+      ; type' : types
+      ; scope : scope
+      ; generics : generics list option
       ; arguments : arguments list
       ; body : expressions
       ; location : location
       }
-  | StatementStruct
+  | StatementStruct of
+      { id : id
+      ; scope : scope
+      ; members : members list
+      ; location : location
+      }
   | StatementEnum
   | StatementValue of
-      { id : id list
-      ; typex : types option
+      { ids : id list
+      ; type' : types option
       ; expression : expressions
       ; location : location
       }
+  | StatementAlone of expressions
   | StatementAssign of
       { id : id
       ; expression : expressions
@@ -54,7 +64,7 @@ and statements =
       }
   | StatementReturn of expressions
   | StatementUse of
-      { path : id list
+      { path : paths
       ; location : location
       }
   | StatementComment of
@@ -64,13 +74,16 @@ and statements =
   | StatementNone
 
 and expressions =
-  | ExpressionOperation of
-      { expressions : expressions list
-      ; location : location
+  | ExpressionOperation of { expressions : expressions list }
+  | ExpressionBinaryOperation of
+      { left : expressions
+      ; operation : operations
+      ; right : expressions
       }
   | ExpressionFunction of
-      { path : id list
+      { path : paths
       ; arguments : arguments list
+      ; trailing : expressions list option
       ; location : location
       }
   | ExpressionTerminal of
@@ -85,7 +98,7 @@ and expressions =
 and arguments =
   | ArgumentDefinition of
       { id : id list
-      ; typex : types
+      ; type' : types
       ; location : location
       }
   | ArgumentInvocation of
@@ -93,12 +106,50 @@ and arguments =
       ; location : location
       }
 
+and members =
+  | MemberData of
+      { doc : statements list
+      ; ids : id list
+      ; type' : types
+      ; scope : scope
+      }
+
+and paths =
+  | Path of id list
+  | PathModule of id list
+  | PathObject of id list
+
+and scope =
+  | ExportStatic
+  | ExportLocal
+  | ExportGlobal
+
+and operations =
+  | BinaryPlus
+  | BinaryMinus
+  | BinaryStar
+  | BinarySlash
+  | BinaryStarStar
+
 and terminals =
-  | IntVal of { value : int }
+  | UsizeVal of { value : int }
   | FloatVal of { value : float }
+  | StringVal of { value : string }
   | IdVal of { value : id }
+
+and generics =
+  | TypeGeneric of
+      { ids : id list
+      ; interfaces : id list
+      }
 
 and types =
   | TypeUnit
-  | TypeInt
+  | TypeUsize
   | TypeFloat
+  | TypeTuple of { types : types list }
+  | TypeArray of
+      { type' : types
+      ; n : terminals
+      }
+  | TypeDerived of { type' : id }

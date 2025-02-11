@@ -3,7 +3,8 @@ let newline = ['\r''\n'] | "\r\n"
 let digit = ['0'-'9']['0'-'9']*
 let integer = ['-''+']? digit
 let float = ['-''+']? digit ['.'] digit
-let id = ['a'-'z''A'-'Z''_']['a'-'z''A'-'Z''0'-'9''_']*
+let string = ['\"'][^'\"']*['\"']
+let id = ['a'-'z''A'-'Z''_']['a'-'z''A'-'Z''0'-'9''_']*['\'']*
 let comment = "//"[^'\n']*newline
 
 rule token = parse
@@ -13,20 +14,29 @@ rule token = parse
   | whitespace { token lexbuf }
 
   (* Terminals *)
-  | integer as lexeme { Ixparser.INTVAL(int_of_string lexeme) }
+  | integer as lexeme { Ixparser.USIZEVAL(int_of_string lexeme) }
   | float as lexeme { Ixparser.FLOATVAL(float_of_string lexeme) }
+  | string as string { Ixparser.STRINGVAL(string) }
 
-  | "int" { Ixparser.INT }
+  | "usize" { Ixparser.USIZE }
   | "float" { Ixparser.FLOAT }
+  | "string" { Ixparser.STRING }
+
+  | "module" { Ixparser.MODULE }
+  | "struct" { Ixparser.STRUCT }
+  | "enum" { Ixparser.ENUM }
+  | "fn" { Ixparser.FN }
+
+  | "interface" { Ixparser.INTERFACE }
+  | "macro" { Ixparser.MACRO }
 
   | "use" { Ixparser.USE }
   | "let" { Ixparser.LET }
-  | "fn" { Ixparser.FN }
-  | "struct" { Ixparser.STRUCT }
-  | "enum" { Ixparser.ENUM }
-  | "macro" { Ixparser.MACRO }
-
   | "return" { Ixparser.RETURN}
+  | "implement" { Ixparser.IMPLEMENT }
+  | "instantiate" { Ixparser.INSTANTIATE }
+  | "external" { Ixparser.EXTERNAL }
+  | "internal" { Ixparser.INTERNAL }
 
   | "." { Ixparser.DOT }
   | ";" { Ixparser.SEMICOLON}
@@ -37,16 +47,24 @@ rule token = parse
   | "}" { Ixparser.RBRACE }
   | "(" { Ixparser.LPAREN }
   | ")" { Ixparser.RPAREN }
+  | "[" { Ixparser.LBRACK }
+  | "]" { Ixparser.RBRACK }
   | "<" { Ixparser.LANGLE }
   | ">" { Ixparser.RANGLE }
   | "<-" { Ixparser.LARROW }
   | "->" { Ixparser.RARROW }
 
-  | "+" { Ixparser.ADD }
-  | "-" { Ixparser.SUB }
-  | "*" { Ixparser.MUL }
-  | "/" { Ixparser.DIV }
-  | "**" { Ixparser.EXP }
+  | "+" { Ixparser.PLUS }
+  | "-" { Ixparser.MINUS }
+  | "*" { Ixparser.STAR }
+  | "/" { Ixparser.SLASH }
+  | "**" { Ixparser.STARSTAR }
+
+  | ".+." { Ixparser.OVERLOADPLUS }
+  | ".-." { Ixparser.OVERLOADMINUS }
+  | ".*." { Ixparser.OVERLOADSTAR }
+  | "./." { Ixparser.OVERLOADSLASH }
+  | ".**." { Ixparser.OVERLOADSTARSTAR }
 
   | "!" { Ixparser.NOT }
   | "||" { Ixparser.OR }
