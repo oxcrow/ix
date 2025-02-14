@@ -8,9 +8,9 @@
 // This is only possible if our compiler architechture supports
 // fast dependency analysis, incremental compilation, etc.
 //
-// Thus we must develop the compiler passses before emiting LLVM IR.
+// Thus we must develop the compiler passes in steps.
 
-fn main() {
-	let x = 0
-	let y = 1
+fn one() usize {
+	let x = 1
+	x
 }
