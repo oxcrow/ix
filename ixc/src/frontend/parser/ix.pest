@@ -26,11 +26,17 @@ id = { (alphabet|underscore) ~ (alphabet|digit|underscore)* ~ ("'")* }
 file = { SOI ~ statements* ~ EOI}
 
 statements = { statement_function }
-statement_function = { "fn" ~ id ~ "(" ~ ")" ~ type ~ "{" ~ (statement_value|statement_alone)* ~"}" }
+statement_function = { "fn" ~ scope? ~ id ~ "(" ~ ")" ~ type? ~ "{" ~ (statement_value|statement_alone)* ~"}" }
 statement_value = { "let" ~ id ~ "=" ~ digit+ ~ ";"? }
 statement_alone = { id }
 
+scope = { scope_local|scope_global }
+scope_local = { "+" }
+scope_global = { "*" }
+
+unit = _{ "()" }
 usize = _{ "usize" }
 float = _{ "float" }
+string = _{ "string" }
 
-type = { usize | float }
+type = { unit | usize | float | string }
