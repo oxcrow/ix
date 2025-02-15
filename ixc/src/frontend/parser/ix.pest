@@ -18,6 +18,7 @@ underscore = _{ "_" }
 digit = _{ '0'..'9' }
 
 id = { (alphabet|underscore) ~ (alphabet|digit|underscore)* ~ ("'")* }
+ids = { id ~ ("," ~ id)* }
 
 //
 // Grammar
@@ -25,13 +26,15 @@ id = { (alphabet|underscore) ~ (alphabet|digit|underscore)* ~ ("'")* }
 
 file = { SOI ~ (entities)* ~ EOI}
 
-entities = { module|function }
+entities = { module|function|struct }
 expressions = { assignment|expression }
 
 module = { "module" ~ scope? ~ id ~ "{" ~ entities* ~ "}" }
 function = { "fn" ~ scope? ~ id ~ "(" ~ ")" ~ ":"? ~ type? ~ "{" ~ expressions* ~"}" }
+struct = { "struct" ~ scope? ~ id ~ "{" ~ value ~ "}"}
 
 assignment = { "let" ~ id ~ assignment_specifier ~ digit+ ~ ";"? }
+value = { ids  ~ scope? ~ ":"? ~ type ~ ","? }
 expression = { id }
 
 scope = _{ global|local|static }
