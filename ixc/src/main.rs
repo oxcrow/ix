@@ -22,7 +22,7 @@ fn main() -> Result<()> {
 	header();
 
 	let code = std::fs::read_to_string("src/main.ix")?;
-	parse::parse_entire_code(&code)?;
+	parse::parse_string(&code)?;
 
 	Ok(())
 }

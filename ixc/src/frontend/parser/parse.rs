@@ -10,9 +10,8 @@ use pest_derive::Parser;
 struct IxParser;
 
 /// Parse the source cdode and create an AST
-pub fn parse_entire_code(source: &str) -> Result<()> {
-	let mut parse_tree = IxParser::parse(Rule::file, source)?;
-	dbg!(&parse_tree);
+pub fn parse_string(source: &str) -> Result<()> {
+	let parse_tree = IxParser::parse(Rule::file, source)?;
 	Ok(())
 }
 
