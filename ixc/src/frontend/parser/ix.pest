@@ -29,7 +29,7 @@ entities = { module|function }
 expressions = { assignment|expression }
 
 module = { "module" ~ scope? ~ id ~ "{" ~ entities* ~ "}" }
-function = { "fn" ~ scope? ~ id ~ "(" ~ ")" ~ type? ~ "{" ~ expressions* ~"}" }
+function = { "fn" ~ scope? ~ id ~ "(" ~ ")" ~ ":"? ~ type? ~ "{" ~ expressions* ~"}" }
 
 assignment = { "let" ~ id ~ assignment_specifier ~ digit+ ~ ";"? }
 expression = { id }
