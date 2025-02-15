@@ -23,9 +23,10 @@ id = { (alphabet|underscore) ~ (alphabet|digit|underscore)* ~ ("'")* }
 // Grammar
 //
 
-file = { SOI ~ statements* ~ EOI}
+file = { SOI ~ (statement_module|statement_function)* ~ EOI}
 
-statements = { statement_function }
+statements = { statement_module|statement_function|statement_value|statement_alone }
+statement_module = { "module" ~ scope? ~ id ~ "{" ~ (statement_module|statement_function)* ~ "}" }
 statement_function = { "fn" ~ scope? ~ id ~ "(" ~ ")" ~ type? ~ "{" ~ (statement_value|statement_alone)* ~"}" }
 statement_value = { "let" ~ id ~ "=" ~ digit+ ~ ";"? }
 statement_alone = { id }
