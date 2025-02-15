@@ -42,9 +42,9 @@ local = { "+" }
 constant_assignment = { "=" }
 variable_assignment = { ":=" }
 
-unit = _{ "()" }
-usize = _{ "usize" }
-float = _{ "float" }
-string = _{ "string" }
+unit = { "(" ~ ")" }
+usize = { "usize" }
+float = { "float" }
+string = { "string" }
 
-type = { unit | usize | float | string }
+type = _{ unit | usize | float | string }
