@@ -1,5 +1,14 @@
-// Aim: Develop an efficient compiler.
+// Aim: Implement type inference.
+//
+// I have developed the lexer/parser in the past.
+// However right now we need an end-to-end compiler that works.
+// Thus without any delay we aim to implement the core language.
+//
+// Right now we just care about generating our bootstrap compiler.
+// Performance does not matter for the bootstrap compiler thus we
+// should try to write simple code without optimizing too much.
 
-fn main() {
-	write("hello world\n")
+fn hereBeThineCode() usize {
+	let x = 1
+	x
 }
