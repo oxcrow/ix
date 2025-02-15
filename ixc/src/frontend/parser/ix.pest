@@ -1,0 +1,36 @@
+// cheatsheet : https://pest.rs/book/grammars/syntax.html#cheat-sheet
+
+// ignore non-significant whitespace
+WHITESPACE = _{ whitespace | newline }
+
+// ignore everything after comments
+COMMENT = _{ line_comment }
+
+// ignore line comments and block comments
+// note: i do not understand how the block comment works
+line_comment  = _{ "//" ~ (!newline ~ ANY)* }
+
+// common regexes required for denoting the grammar
+whitespace = _{ " " | "\t" }
+newline = _{ "\n" | "\r\n" | "\r" }
+alphabet = _{ 'a'..'z' | 'A'..'Z' }
+underscore = _{ "_" }
+digit = _{ '0'..'9' }
+
+id = { (alphabet|underscore) ~ (alphabet|digit|underscore)* ~ ("'")* }
+
+//
+// Grammar
+//
+
+file = { SOI ~ statements* ~ EOI}
+
+statements = { statement_function }
+statement_function = { "fn" ~ id ~ "(" ~ ")" ~ type ~ "{" ~ (statement_value|statement_alone)* ~"}" }
+statement_value = { "let" ~ id ~ "=" ~ digit+ ~ ";"? }
+statement_alone = { id }
+
+usize = _{ "usize" }
+float = _{ "float" }
+
+type = { usize | float }

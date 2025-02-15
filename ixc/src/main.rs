@@ -15,16 +15,11 @@ fn header() {
 }
 
 fn main() -> Result<()> {
-	use crate::frontend::lexer::lex;
+	use crate::frontend::parser::parse;
 	header();
 
 	let code = std::fs::read_to_string("src/main.ix")?;
-	let mut code = &code[0..];
-
-	while !code.is_empty() {
-		let (tokens, xcode) = lex::lex_line(&code)?;
-		code = xcode;
-	}
+	parse::parse_entire_code(&code)?;
 
 	Ok(())
 }
