@@ -31,14 +31,15 @@ expressions = { assignment|expression }
 module = { "module" ~ scope? ~ id ~ "{" ~ entities* ~ "}" }
 function = { "fn" ~ scope? ~ id ~ "(" ~ ")" ~ type? ~ "{" ~ expressions* ~"}" }
 
-assignment = { "let" ~ id ~ (constant_assignment|variable_assignment) ~ digit+ ~ ";"? }
+assignment = { "let" ~ id ~ assignment_specifier ~ digit+ ~ ";"? }
 expression = { id }
 
-scope = { global|local|static }
+scope = _{ global|local|static }
 static = { "" }
 global = { "*" }
 local = { "+" }
 
+assignment_specifier = _{ constant_assignment | variable_assignment }
 constant_assignment = { "=" }
 variable_assignment = { ":=" }
 
