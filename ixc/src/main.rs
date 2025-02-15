@@ -4,6 +4,9 @@
 #![allow(unused_variables)]
 #![allow(unused_mut)]
 #![allow(non_snake_case)]
+//
+#![allow(clippy::iter_nth_zero)]
+#![allow(clippy::let_and_return)]
 
 use anyhow::ensure;
 use anyhow::Result;

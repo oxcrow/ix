@@ -172,7 +172,7 @@ pub fn lex_line(code: &str) -> Result<(Array<Tokens, 128>, &str)> {
 	// re-tokenizing the same token again and again by mistake.
 	let mut line = &code[0..line_length];
 
-	fn lex_next_token<'a>(line: &'a str, expected_token: Tokens) -> (Tokens, &'a str) {
+	fn lex_next_token(line: &str, expected_token: Tokens) -> (Tokens, &str) {
 		use Tokens::*;
 		let (found_token, token_length) = match expected_token {
 			| Whitespace => search_whitespace(line, ""),
@@ -259,7 +259,7 @@ pub fn lex_line(code: &str) -> Result<(Array<Tokens, 128>, &str)> {
 		// If we have finished reading everything then we succeeded.
 		// If we already found the token then we suceeded.
 		// We can return as we have nothing else to do.
-		if line.is_empty() || *found == true {
+		if line.is_empty() || *found {
 			return line;
 		}
 		let (token, line) = lex_next_token(line, expected_token);
