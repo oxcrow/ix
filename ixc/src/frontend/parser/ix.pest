@@ -23,17 +23,24 @@ id = { (alphabet|underscore) ~ (alphabet|digit|underscore)* ~ ("'")* }
 // Grammar
 //
 
-file = { SOI ~ (statement_module|statement_function)* ~ EOI}
+file = { SOI ~ (entities)* ~ EOI}
 
-statements = { statement_module|statement_function|statement_value|statement_alone }
-statement_module = { "module" ~ scope? ~ id ~ "{" ~ (statement_module|statement_function)* ~ "}" }
-statement_function = { "fn" ~ scope? ~ id ~ "(" ~ ")" ~ type? ~ "{" ~ (statement_value|statement_alone)* ~"}" }
-statement_value = { "let" ~ id ~ "=" ~ digit+ ~ ";"? }
-statement_alone = { id }
+entities = { module|function }
+expressions = { assignment|expression }
 
-scope = { scope_local|scope_global }
-scope_local = { "+" }
-scope_global = { "*" }
+module = { "module" ~ scope? ~ id ~ "{" ~ entities* ~ "}" }
+function = { "fn" ~ scope? ~ id ~ "(" ~ ")" ~ type? ~ "{" ~ expressions* ~"}" }
+
+assignment = { "let" ~ id ~ (constant_assignment|variable_assignment) ~ digit+ ~ ";"? }
+expression = { id }
+
+scope = { global|local|static }
+static = { "" }
+global = { "*" }
+local = { "+" }
+
+constant_assignment = { "=" }
+variable_assignment = { ":=" }
 
 unit = _{ "()" }
 usize = _{ "usize" }
