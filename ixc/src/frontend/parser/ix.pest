@@ -3,12 +3,10 @@
 // ignore non-significant whitespace
 WHITESPACE = _{ whitespace | newline }
 
-// ignore everything after comments
-COMMENT = _{ line_comment }
-
-// ignore line comments and block comments
-// note: i do not understand how the block comment works
-line_comment  = _{ "//" ~ (!newline ~ ANY)* }
+// line comments and block comments
+// note: we do not ignore comments as we need to parse them for formatting
+comment  = @{ "//" ~ (!newline ~ ANY)* ~ newline }
+doc = @{"///" ~ (!newline ~ ANY)* ~ newline }
 
 // common regexes required for denoting the grammar
 whitespace = _{ " " | "\t" }
@@ -24,17 +22,17 @@ ids = { id ~ ("," ~ id)* }
 // Grammar
 //
 
-file = { SOI ~ (entities)* ~ EOI}
+file = { SOI ~ (!doc ~ comment|entities)* ~ EOI}
 
 entities = { module|function|struct }
 expressions = { assignment|expression }
 
-module = { "module" ~ scope? ~ id ~ "{" ~ entities* ~ "}" }
-function = { "fn" ~ scope? ~ id ~ "(" ~ ")" ~ ":"? ~ type? ~ "{" ~ expressions* ~"}" }
-struct = { "struct" ~ scope? ~ id ~ "{" ~ value ~ "}"}
+module = { doc* ~ "module" ~ scope? ~ id ~ "{" ~ (entities)* ~ "}" }
+function = { doc* ~ "fn" ~ scope? ~ id ~ "(" ~ ")" ~ ":"? ~ type? ~ "{" ~ (!doc ~ comment|expressions)* ~"}" }
+struct = { doc* ~ "struct" ~ scope? ~ id ~ "{" ~ value+ ~ "}"}
 
 assignment = { "let" ~ id ~ assignment_specifier ~ digit+ ~ ";"? }
-value = { ids  ~ scope? ~ ":"? ~ type ~ ","? }
+value = { doc* ~ ids  ~ scope? ~ ":"? ~ type ~ ","? }
 expression = { id }
 
 scope = _{ global|local|static }
