@@ -15,3 +15,17 @@ pub fn parse_entire_code(source: &str) -> Result<()> {
 	dbg!(&parse_tree);
 	Ok(())
 }
+
+#[cfg(test)]
+mod utest {
+	use super::*;
+
+	#[test]
+	fn test_parser() -> Result<()> {
+		parse_string("fn one() usize { let x = 1; x }")?;
+		parse_string("struct Node { x,y,z* float }")?;
+		parse_string("struct Node { x,y,z+ float }")?;
+		parse_string("struct Node { x,y,z float }")?;
+		Ok(())
+	}
+}
