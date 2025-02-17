@@ -15,7 +15,7 @@ alphabet = _{ 'a'..'z' | 'A'..'Z' }
 underscore = _{ "_" }
 digit = _{ '0'..'9' }
 
-id = { (alphabet|underscore) ~ (alphabet|digit|underscore)* ~ ("'")* }
+id = @{ (alphabet|underscore) ~ (alphabet|digit|underscore)* ~ ("'")* }
 ids = { id ~ ("," ~ id)* }
 
 //
