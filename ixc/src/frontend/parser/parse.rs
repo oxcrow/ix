@@ -23,8 +23,7 @@ mod utest {
 	#[test]
 	fn test_parser() -> Result<()> {
 		parse_string("fn one() usize { let x = 1; x }")?;
-		parse_string("struct Node { x,y,z* float }")?;
-		parse_string("struct Node { x,y,z+ float }")?;
+		parse_string("struct Node { vis x,y,z float }")?;
 		parse_string("struct Node { x,y,z float }")?;
 		Ok(())
 	}

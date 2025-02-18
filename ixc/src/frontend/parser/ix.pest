@@ -27,18 +27,17 @@ file = { SOI ~ (!doc ~ comment|entities)* ~ EOI}
 entities = { module|function|struct }
 expressions = { assignment|expression }
 
-module = { doc* ~ "module" ~ scope? ~ id ~ "{" ~ (entities)* ~ "}" }
-function = { doc* ~ "fn" ~ scope? ~ id ~ "(" ~ ")" ~ ":"? ~ type? ~ "{" ~ (!doc ~ comment|expressions)* ~"}" }
-struct = { doc* ~ "struct" ~ scope? ~ id ~ "{" ~ value+ ~ "}"}
+module = { doc* ~ scope? ~ "module" ~ id ~ "{" ~ (entities)* ~ "}" }
+function = { doc* ~ scope? ~ "fn" ~ id ~ "(" ~ ")" ~ ":"? ~ type? ~ "{" ~ (!doc ~ comment|expressions)* ~"}" }
+struct = { doc* ~ scope? ~ "struct" ~ id ~ "{" ~ value+ ~ "}"}
 
 assignment = { "let" ~ id ~ assignment_specifier ~ digit+ ~ ";"? }
-value = { doc* ~ ids  ~ scope? ~ ":"? ~ type ~ ","? }
+value = { doc* ~ scope? ~ ids ~ ":"? ~ type ~ ","? }
 expression = { id }
 
-scope = _{ global|local|static }
+scope = _{ global|static }
+global = { "vis" }
 static = { "" }
-global = { "*" }
-local = { "+" }
 
 assignment_specifier = _{ constant_assignment | variable_assignment }
 constant_assignment = { "=" }
