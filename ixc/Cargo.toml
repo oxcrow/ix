@@ -6,6 +6,8 @@ edition = "2021"
 [dependencies]
 anyhow = "1.0.95"
 arrayvec = "0.7.6"
+bumpalo = { version = "3.17.0", features = ["collections"] }
+enum-as-inner = "0.6.1"
 itertools = "0.14.0"
 pest = "2.7.15"
 pest_derive = "2.7.15"

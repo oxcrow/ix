@@ -3,15 +3,22 @@ use anyhow::Result;
 
 use pest::Parser;
 use pest_derive::Parser;
+//
+use pest::iterators::Pairs;
 
 // Ix parser created from pest grammar
 #[derive(Parser)]
 #[grammar = "src/frontend/parser/ix.pest"]
 struct IxParser;
 
-/// Parse the source cdode and create an AST
-pub fn parse_string(source: &str) -> Result<()> {
+/// Parse the source cdode and create a parse pair tree
+pub fn parse_string(source: &str) -> Result<Pairs<'_, Rule>> {
 	let parse_tree = IxParser::parse(Rule::file, source)?;
+	Ok(parse_tree)
+}
+
+/// Parse the parse tree and create an Abstract Syntax Tree (AST)
+pub fn parse_tree(tree: &Pairs<'_, Rule>) -> Result<()> {
 	Ok(())
 }
 

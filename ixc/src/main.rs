@@ -11,18 +11,27 @@
 use anyhow::ensure;
 use anyhow::Result;
 
+mod core;
 mod frontend;
 
 fn header() {
 	println!("* ix *");
 }
 
+fn dev() -> Result<()> {
+	Ok(())
+}
+
 fn main() -> Result<()> {
 	use crate::frontend::parser::parse;
 	header();
 
+	// Read code from file and compile it
+	// Note: We should try to compile incrementally.
 	let code = std::fs::read_to_string("src/main.ix")?;
-	parse::parse_string(&code)?;
+	let tree = parse::parse_string(&code)?;
+	let ast = parse::parse_tree(&tree)?;
 
+	dev()?;
 	Ok(())
 }
