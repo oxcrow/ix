@@ -240,7 +240,6 @@ mod utest {
 		let identifiers = Arena::vec![in &arena; "main"];
 		let signature = calculate_ast_signature_step1(&arena, &ast, &identifiers)?;
 		let signature = calculate_ast_signature_step2(&arena, &ast, &identifiers, signature)?;
-		dbg!(signature);
 		Ok(())
 	}
 }
