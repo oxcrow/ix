@@ -134,9 +134,9 @@ pub struct SymbolContext {
 
 #[derive(Debug)]
 pub struct MetaData {
-	num_modules: u16,
-	num_functions: u16,
-	num_structs: u16,
+	num_modules: usize,
+	num_functions: usize,
+	num_structs: usize,
 }
 
 /// Nodes of Abstract Syntax Tree
@@ -191,9 +191,9 @@ pub fn calculate_ast_signature_step1<'arena>(
 			symbol_content,
 			symbol_context,
 			meta_data: MetaData {
-				num_modules: num_modules as u16,
-				num_functions: num_functions as u16,
-				num_structs: num_structs as u16,
+				num_modules,
+				num_functions,
+				num_structs,
 			},
 		};
 		signature
