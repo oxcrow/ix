@@ -181,13 +181,13 @@ pub fn calculate_ast_signature_step1<'arena>(
 	let mut signature = {
 		let symbol_identifiers = Arena::Vec::<&str>::with_capacity_in(num_entities, arena);
 		let symbol_kinds = Arena::Vec::<Nodes>::with_capacity_in(num_entities, arena);
-		let symbol_byte_sizes = Arena::Vec::<u16>::with_capacity_in(num_entities, arena);
+		let symbol_sizes = Arena::Vec::<u16>::with_capacity_in(num_entities, arena);
 		let symbol_content = Arena::Vec::<SymbolContent>::with_capacity_in(num_entities, arena);
 		let symbol_context = Arena::Vec::<SymbolContext>::with_capacity_in(num_entities, arena);
 		let signature = Signature {
 			symbol_identifiers,
 			symbol_kinds,
-			symbol_sizes: symbol_byte_sizes,
+			symbol_sizes,
 			symbol_content,
 			symbol_context,
 			meta_data: MetaData {
