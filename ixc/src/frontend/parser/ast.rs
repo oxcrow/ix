@@ -19,34 +19,35 @@ pub struct Ast<'arena> {
 /// Whether we like it or not we need to have some way to represent mutable states.
 /// Specifically things that are necessary for keeping records of how the code is composed.
 struct State {
-	/// A unique identifier generator that we can use for creating unique references to external entities.
+	/// A unique identifier that we can use for creating unique references to external entities.
 	///
-	/// We want to use a hashing algorithm that would create perfect unique identities, but that's impossible.
-	/// Hashing algorithms have collisions and are imperfect in nature. To prevent collisions we need to use more bits.
-	/// However that would significanlty increase our memory requirements for each AST node. Thus we avoid it for now.
+	/// We want to use a hashing algorithm that creates perfect unique identities, but that's impossible.
+	/// Hashing algorithms have collisions and are imperfect in nature.
+	/// To prevent collisions we need to use more bits.
+	/// However that would significanlty increase our memory requirements for each AST node.
+	/// Thus we avoid it for now.
 	///
 	/// As a simple and 100% collision free solution we use an integer as our unique identifier.
-	/// For every node this unique identifier state will be incremented and will become the new unique identifier.
+	/// For every node this integer state will be incremented and will become the new unique identifier.
 	next_unique_identifier: u16,
 }
 
 /// Abstract syntax tree signature
 ///
 /// This only contains data regarding the signature of top level nodes such as structs, enums, functions.
-/// We store this data separately since this data is required by external modules for name resolution, type checking,
-/// ownership checking, and ensuring that we can compile every dependent module in parallel *without* compiling this
-/// module completely first.
+/// We store this data separately since this data is required by external modules for analysis and verification.
+/// Specifically we need to do name resolution, type checking, ownership checking, etc.
+/// Thus we must ensure that we can compile every dependent module in parallel *without* compiling this module first.
 ///
 /// That is,
 /// If we code `std.io.println("Hello world!")` we do not need to know what happens inside `println`.
-/// We are only concerned with the type signature of `println` and as long as the type signature is verified,
-/// the code is expected to work correctly, and is not the concern of the module which calls `println`.
-/// Thus this type signature is crucial for us and we need an efficient way to store and retrieve it.
-/// Thus we store them in a SoA (Structure of Arrays) form.
+/// We are only concerned with the type signature of `println`. Nothing else.
+/// Thus we need an efficient data format to store and retrieve it.
+/// We choose to store them in a SoA (Structure of Arrays) form.
 ///
 /// SoA form is also selected because it allows us to do fast iterative searches through the AST.
-/// As in, when we want to run queries such as, "Find me all structs within this module", we only have to iterate
-/// through symbol_types and find the indices of the AST nodes which are structs.
+/// As in, when we want to run queries such as, "Find me all structs within this module",
+/// we only have to iterate through `symbol_kinds` and find the AST nodes of structs.
 ///
 /// This is an efficient way to store and search our data. (since hard disks are slow.)
 #[derive(Debug)]
@@ -68,8 +69,8 @@ pub struct Signature<'arena> {
 	///
 	/// One of the most critical tasks of the compiler would be to do name resolution and type resolution.
 	/// Thus we need to store the type signatures in a way that is efficient to read, write, and analyse.
-	/// While the primitive types (such as usize, float, str) will be stored directly,
-	/// The type signature of external types will be stored as relative links.
+	/// The type signature of primitive types (such as usize, float, str) will be stored directly.
+	/// The type signature of derived types will be stored as relative links.
 	///
 	/// That is,
 	/// In function signature `fn add(x,y foo.Bar) foo.Bar`, we will not resolve the type `foo.Bar` directly.
