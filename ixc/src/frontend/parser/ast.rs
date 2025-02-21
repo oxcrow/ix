@@ -157,7 +157,7 @@ pub enum Nodes {
 	End,
 }
 
-pub fn identify_ast_signature<'arena>(
+pub fn calculate_ast_signature<'arena>(
 	arena: &'arena Arena::Allocator,
 	ast: &'arena [Nodes],
 	identifiers: &'arena [&str],
@@ -226,7 +226,7 @@ mod utest {
 		let documentations = Arena::vec![in &arena; "/// Driver code\n"];
 		let comments = Arena::vec![in &arena; "// * code goes here *\n"];
 		let identifiers = Arena::vec![in &arena; "main"];
-		let signature = identify_ast_signature(&arena, &ast, &identifiers)?;
+		let signature = calculate_ast_signature(&arena, &ast, &identifiers)?;
 		dbg!(signature);
 		Ok(())
 	}
