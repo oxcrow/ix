@@ -105,6 +105,9 @@ pub struct Signature<'arena> {
 	/// Since the contexts will be extremely large in size, we can not store them as an object within this struct.
 	/// Thus for safer decoupling we just store their handles so we can access them later on.
 	pub symbol_context: Arena::Vec<'arena, SymbolContext>,
+
+	/// Meta data
+	pub meta_data: MetaData,
 }
 
 /// Abstract syntax tree context
@@ -127,6 +130,13 @@ pub struct SymbolContent {
 pub struct SymbolContext {
 	context_head_index: u16,
 	len: u16,
+}
+
+#[derive(Debug)]
+pub struct MetaData {
+	num_modules: u16,
+	num_functions: u16,
+	num_structs: u16,
 }
 
 /// Nodes of Abstract Syntax Tree
@@ -180,6 +190,11 @@ pub fn calculate_ast_signature_step1<'arena>(
 			symbol_byte_sizes,
 			symbol_content,
 			symbol_context,
+			meta_data: MetaData {
+				num_modules: num_modules as u16,
+				num_functions: num_functions as u16,
+				num_structs: num_structs as u16,
+			},
 		};
 		signature
 	};
