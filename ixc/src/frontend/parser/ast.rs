@@ -1,5 +1,3 @@
-use std::convert::identity;
-
 use anyhow::ensure;
 use anyhow::Result;
 
