@@ -205,11 +205,7 @@ pub fn calculate_ast_signature_step1<'arena>(
 		if node.is_module() || node.is_function() || node.is_struct() {
 			let identifier = identifiers.peek().unwrap();
 			let kind = node;
-			let size = if node.is_struct() {
-				u16::MAX // size not yet calculated for a struct so we set it to an ivalid state
-			} else {
-				0 // modules and functions always have size 0
-			};
+			let size = if node.is_struct() { u16::MAX } else { 0 }; // struct sizes are not yet calculated
 			signature.symbol_identifiers.push(identifier);
 			signature.symbol_kinds.push(kind);
 			signature.symbol_sizes.push(size);
