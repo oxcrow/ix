@@ -74,7 +74,7 @@ pub struct Signature<'arena> {
 	/// The statically determined size of each struct, enum, etc. will be stored in this.
 	/// Since a structs and enums may contain too many elements we need u16 to store it.
 	/// Since functions, modules, aliases, etc. do not have any meaningful sizes, their size will be stored as zero.
-	pub symbol_byte_sizes: Arena::Vec<'arena, u16>,
+	pub symbol_sizes: Arena::Vec<'arena, u16>,
 
 	/// Handles to content signatures of symbols
 	///
@@ -187,7 +187,7 @@ pub fn calculate_ast_signature_step1<'arena>(
 		let signature = Signature {
 			symbol_identifiers,
 			symbol_kinds,
-			symbol_byte_sizes,
+			symbol_sizes: symbol_byte_sizes,
 			symbol_content,
 			symbol_context,
 			meta_data: MetaData {
@@ -208,7 +208,7 @@ pub fn calculate_ast_signature_step1<'arena>(
 			let size = 0;
 			signature.symbol_identifiers.push(identifier);
 			signature.symbol_kinds.push(kind);
-			signature.symbol_byte_sizes.push(size);
+			signature.symbol_sizes.push(size);
 			identifiers.next();
 		}
 	}
