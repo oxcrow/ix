@@ -157,7 +157,7 @@ pub enum Nodes {
 	End,
 }
 
-pub fn calculate_ast_signature<'arena>(
+pub fn calculate_ast_signature_step1<'arena>(
 	arena: &'arena Arena::Allocator,
 	ast: &'arena [Nodes],
 	identifiers: &'arena [&str],
@@ -201,6 +201,15 @@ pub fn calculate_ast_signature<'arena>(
 	Ok(signature)
 }
 
+pub fn calculate_ast_signature_step2<'arena>(
+	arena: &'arena Arena::Allocator,
+	ast: &'arena [Nodes],
+	identifiers: &'arena [&str],
+	mut signature: Signature<'arena>,
+) -> Result<Signature<'arena>> {
+	Ok(signature)
+}
+
 #[cfg(test)]
 mod utest {
 	use super::*;
@@ -226,7 +235,8 @@ mod utest {
 		let documentations = Arena::vec![in &arena; "/// Driver code\n"];
 		let comments = Arena::vec![in &arena; "// * code goes here *\n"];
 		let identifiers = Arena::vec![in &arena; "main"];
-		let signature = calculate_ast_signature(&arena, &ast, &identifiers)?;
+		let signature = calculate_ast_signature_step1(&arena, &ast, &identifiers)?;
+		let signature = calculate_ast_signature_step2(&arena, &ast, &identifiers, signature)?;
 		dbg!(signature);
 		Ok(())
 	}
