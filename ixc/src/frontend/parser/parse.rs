@@ -6,6 +6,11 @@ use pest_derive::Parser;
 //
 use pest::iterators::Pairs;
 
+use crate::core::arena::Arena;
+//
+use crate::frontend::parser::ast::Ast;
+use crate::frontend::parser::ast::Nodes;
+
 // Ix parser created from pest grammar
 #[derive(Parser)]
 #[grammar = "src/frontend/parser/ix.pest"]
@@ -27,10 +32,17 @@ mod utest {
 	use super::*;
 
 	#[test]
-	fn test_parser() -> Result<()> {
+	fn test_parse_string() -> Result<()> {
 		parse_string("fn one() usize { let x = 1; x }")?;
 		parse_string("struct Node { vis x,y,z float }")?;
 		parse_string("struct Node { x,y,z float }")?;
+		Ok(())
+	}
+
+	#[test]
+	fn test_parse_tree() -> Result<()> {
+		let tree = parse_string("fn main() {}")?;
+		let ast = parse_tree(&tree)?;
 		Ok(())
 	}
 }
