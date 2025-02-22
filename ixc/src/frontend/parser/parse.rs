@@ -44,6 +44,9 @@ pub fn parse_tree<'a>(mut arena: Arena::Allocator, tree: Pairs<'a, Rule>) -> Res
 	parse_tree_recursive(&arena, &mut queue, &mut ast, &mut identifiers, &mut comments, &mut documentations);
 
 	dbg!(&ast);
+	dbg!(&documentations);
+	dbg!(&comments);
+	dbg!(&identifiers);
 	Ok(())
 }
 
@@ -70,6 +73,15 @@ fn parse_tree_recursive<'a>(
 		}
 		if node != Nodes::Unknown {
 			ast.push(node);
+			match node {
+				| Nodes::Documentation => {
+					comments.push(string);
+				}
+				| Nodes::Comment => {
+					comments.push(string);
+				}
+				| _ => {}
+			}
 		}
 	}
 
