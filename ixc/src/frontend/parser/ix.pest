@@ -31,7 +31,7 @@ file = { SOI ~ use* ~ (!doc ~ comment|entities)* ~ EOI}
 use = { start ~ "use" ~ id ~ (("." ~ id)+)? ~ ("as" ~ id)? ~  end}
 
 entities = { module|function|struct }
-expressions = { assignment|return|expression }
+expressions = { assignment|return }
 
 module = { start ~ doc* ~ scope? ~ "module" ~ id ~ "{" ~ (entities)* ~ "}" ~ end }
 function = { start ~ doc* ~ scope? ~ "fn" ~ id ~ "(" ~ ")" ~ ":"? ~ type? ~ "{" ~ (!doc ~ comment|expressions)* ~"}" ~ end }

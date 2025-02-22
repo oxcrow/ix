@@ -101,6 +101,7 @@ fn rule_to_node(rule: Rule) -> Nodes {
 		| Rule::doc => Nodes::Documentation,
 		| Rule::comment => Nodes::Comment,
 		| Rule::function => Nodes::Function,
+		| Rule::r#return => Nodes::Return,
 		| Rule::visible => Nodes::Visible,
 		| Rule::hidden => Nodes::Hidden,
 		| Rule::id => Nodes::Identifier,

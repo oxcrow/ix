@@ -137,6 +137,7 @@ pub enum Nodes {
 	Struct,
 	Enum,
 	Assignment,
+	Return,
 	Value,
 	Expression,
 	Visible,
