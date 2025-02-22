@@ -8,6 +8,7 @@
 // Performance does not matter for the bootstrap compiler thus we
 // should try to write simple code without optimizing too much.
 
+/// Driver code
 fn hereBeThineCode() usize {
 	return x
 }

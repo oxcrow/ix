@@ -75,7 +75,7 @@ fn parse_tree_recursive<'a>(
 			ast.push(node);
 			match node {
 				| Nodes::Documentation => {
-					comments.push(string);
+					documentations.push(string);
 				}
 				| Nodes::Comment => {
 					comments.push(string);
