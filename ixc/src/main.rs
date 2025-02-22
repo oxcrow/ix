@@ -30,7 +30,7 @@ fn main() -> Result<()> {
 	// Note: We should try to compile incrementally.
 	let code = std::fs::read_to_string("src/main.ix")?;
 	let tree = parse::parse_string(&code)?;
-	let ast = parse::parse_tree(&tree)?;
+	let ast = parse::parse_tree(tree)?;
 
 	dev()?;
 	Ok(())

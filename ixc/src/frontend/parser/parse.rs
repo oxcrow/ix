@@ -18,12 +18,15 @@ struct IxParser;
 
 /// Parse the source cdode and create a parse pair tree
 pub fn parse_string(source: &str) -> Result<Pairs<'_, Rule>> {
-	let parse_tree = IxParser::parse(Rule::file, source)?;
-	Ok(parse_tree)
+	let tree = IxParser::parse(Rule::file, source)?;
+	Ok(tree)
 }
 
 /// Parse the parse tree and create an Abstract Syntax Tree (AST)
-pub fn parse_tree(tree: &Pairs<'_, Rule>) -> Result<()> {
+pub fn parse_tree(tree: Pairs<'_, Rule>) -> Result<()> {
+	for pair in tree {
+		//
+	}
 	Ok(())
 }
 
