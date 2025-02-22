@@ -45,7 +45,7 @@ mod utest {
 	#[test]
 	fn test_parse_tree() -> Result<()> {
 		let tree = parse_string("fn main() {}")?;
-		let ast = parse_tree(&tree)?;
+		let ast = parse_tree(tree)?;
 		Ok(())
 	}
 }

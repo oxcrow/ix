@@ -8,6 +8,8 @@
 #![allow(clippy::iter_nth_zero)]
 #![allow(clippy::let_and_return)]
 
+use core::arena::Arena;
+
 use anyhow::ensure;
 use anyhow::Result;
 
@@ -28,6 +30,7 @@ fn main() -> Result<()> {
 
 	// Read code from file and compile it
 	// Note: We should try to compile incrementally.
+	let arena = Arena::Allocator::with_capacity(1e+7 as usize);
 	let code = std::fs::read_to_string("src/main.ix")?;
 	let tree = parse::parse_string(&code)?;
 	let ast = parse::parse_tree(tree)?;
