@@ -7,7 +7,6 @@ use pest_derive::Parser;
 use pest::iterators::Pair;
 use pest::iterators::Pairs;
 
-use crate::core::arena;
 use crate::core::arena::Arena;
 //
 use crate::frontend::parser::ast::Ast;
@@ -54,9 +53,13 @@ fn parse_tree_recursive<'arena>(
 	comments: &mut Arena::Vec<&'arena str>,
 	documentations: &mut Arena::Vec<&'arena str>,
 ) {
+	if queue.is_empty() {
+		return;
+	}
+
 	let mut queue_inner = Arena::Vec::<Pair<'arena, Rule>>::new_in(&arena);
 
-	for pair in queue {
+	for pair in queue.iter() {
 		let rule = pair.as_rule();
 		for inner in pair.clone().into_inner() {
 			queue_inner.push(inner);
@@ -64,7 +67,12 @@ fn parse_tree_recursive<'arena>(
 		dbg!(rule);
 	}
 
-	parse_tree_recursive(arena, &mut queue_inner, ast, identifiers, documentations, comments);
+	queue.clear();
+	for inner in queue_inner {
+		queue.push(inner);
+	}
+
+	parse_tree_recursive(arena, queue, ast, identifiers, documentations, comments);
 }
 
 #[cfg(test)]
