@@ -23,10 +23,17 @@ pub fn parse_string(source: &str) -> Result<Pairs<'_, Rule>> {
 }
 
 /// Parse the parse tree and create an Abstract Syntax Tree (AST)
-pub fn parse_tree(tree: Pairs<'_, Rule>) -> Result<()> {
+pub fn parse_tree<'arena>(mut arena: Arena::Allocator, tree: Pairs<'_, Rule>) -> Result<()> {
+	let mut ast = Arena::Vec::<Nodes>::new_in(&arena);
+	let mut identifiers = Arena::Vec::<&str>::new_in(&arena);
+	let mut documentations = Arena::Vec::<&str>::new_in(&arena);
+	let mut comments = Arena::Vec::<&str>::new_in(&arena);
+
 	for pair in tree {
-		//
+		let rule = pair.as_rule();
+		dbg!(rule);
 	}
+
 	Ok(())
 }
 
@@ -44,8 +51,9 @@ mod utest {
 
 	#[test]
 	fn test_parse_tree() -> Result<()> {
+		let arena = Arena::Allocator::new();
 		let tree = parse_string("fn main() {}")?;
-		let ast = parse_tree(tree)?;
+		let ast = parse_tree(arena, tree)?;
 		Ok(())
 	}
 }
