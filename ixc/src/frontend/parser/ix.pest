@@ -28,7 +28,7 @@ end = { "" }
 
 file = { SOI ~ use* ~ (!doc ~ comment|entities)* ~ EOI}
 
-use = { start ~ "use" ~ id ~ (("." ~ id)+)? ~ end}
+use = { start ~ "use" ~ id ~ (("." ~ id)+)? ~ ("as" ~ id)? ~  end}
 
 entities = { module|function|struct }
 expressions = { assignment|expression }
