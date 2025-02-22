@@ -1,7 +1,3 @@
-use std
-use http
-use network
-
 // Aim: Implement type inference.
 //
 // I have developed the lexer/parser in the past.
@@ -13,6 +9,5 @@ use network
 // should try to write simple code without optimizing too much.
 
 fn hereBeThineCode() usize {
-	let x = 1
 	return x
 }
