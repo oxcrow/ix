@@ -153,6 +153,12 @@ pub enum Nodes {
 	Str,
 	Start,
 	End,
+	StartModule,
+	EndModule,
+	StartFunction,
+	EndFunction,
+	StartStruct,
+	EndStruct,
 	Unknown,
 }
 

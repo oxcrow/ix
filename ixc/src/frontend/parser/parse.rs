@@ -102,12 +102,15 @@ fn rule_to_node(rule: Rule) -> Nodes {
 		| Rule::comment => Nodes::Comment,
 		| Rule::function => Nodes::Function,
 		| Rule::r#return => Nodes::Return,
+		| Rule::expression => Nodes::Expression,
 		| Rule::visible => Nodes::Visible,
 		| Rule::hidden => Nodes::Hidden,
 		| Rule::id => Nodes::Identifier,
 		| Rule::usize => Nodes::Usize,
 		| Rule::start => Nodes::Start,
 		| Rule::end => Nodes::End,
+		| Rule::start_function => Nodes::StartFunction,
+		| Rule::end_function => Nodes::EndFunction,
 		| _ => {
 			dbg!(&rule);
 			Nodes::Unknown

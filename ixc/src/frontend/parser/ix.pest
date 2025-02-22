@@ -21,6 +21,12 @@ ids = { id ~ ("," ~ id)* }
 
 start = { "" }
 end = { "" }
+start_module = { "" }
+end_module  = { "" }
+start_function = { "" }
+end_function = { "" }
+start_struct = { "" }
+end_struct = { "" }
 
 //
 // Grammar
@@ -32,9 +38,9 @@ use = { start ~ "use" ~ id ~ (("." ~ id)+)? ~ ("as" ~ id)? ~  end}
 entities = { module|function|struct }
 expressions = { assignment|return }
 
-module = { start ~ doc* ~ scope? ~ "module" ~ id ~ "{" ~ (entities)* ~ "}" ~ end }
-function = { start ~ doc* ~ scope? ~ "fn" ~ id ~ "(" ~ ")" ~ ":"? ~ type? ~ "{" ~ (!doc ~ comment|expressions)* ~"}" ~ end }
-struct = { start ~ doc* ~ scope? ~ "struct" ~ id ~ "{" ~ value+ ~ "}" ~ end }
+module = { start_module ~ doc* ~ scope? ~ "module" ~ id ~ "{" ~ (entities)* ~ "}" ~ end_module }
+function = { start_function ~ doc* ~ scope? ~ "fn" ~ id ~ "(" ~ ")" ~ ":"? ~ type? ~ "{" ~ (!doc ~ comment|expressions)* ~"}" ~ end_function }
+struct = { start_struct ~ doc* ~ scope? ~ "struct" ~ id ~ "{" ~ value+ ~ "}" ~ end_struct }
 
 assignment = { start ~ "let" ~ idx ~ assignment_specifier ~ digit+ ~ ";"? ~ end }
 return = { start ~ "return" ~ expression ~ end }
