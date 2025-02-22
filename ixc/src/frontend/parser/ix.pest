@@ -19,14 +19,16 @@ id = @{ (alphabet|underscore) ~ (alphabet|digit|underscore)* }
 idx = @{ (alphabet|underscore) ~ (alphabet|digit|underscore)* ~ ("'")* }
 ids = { id ~ ("," ~ id)* }
 
+start = { "" }
+end = { "" }
+
 //
 // Grammar
 //
 
-file = { SOI ~ (!doc ~ comment|entities)* ~ EOI}
+file = { SOI ~ use* ~ (!doc ~ comment|entities)* ~ EOI}
 
-start = { "" }
-end = { "" }
+use = { start ~ "use" ~ id ~ (("." ~ id)+)? ~ end}
 
 entities = { module|function|struct }
 expressions = { assignment|expression }
