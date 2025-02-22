@@ -32,8 +32,6 @@ pub fn parse_tree<'a>(mut arena: Arena::Allocator, tree: Pairs<'a, Rule>) -> Res
 
 	let mut queue = Arena::Vec::<Pair<'a, Rule>>::new_in(&arena);
 
-	dbg!(&tree);
-
 	for pair in tree {
 		let rule = pair.as_rule();
 		let string = pair.as_str();
@@ -42,8 +40,6 @@ pub fn parse_tree<'a>(mut arena: Arena::Allocator, tree: Pairs<'a, Rule>) -> Res
 			queue.push(inner);
 		}
 		ast.push(node);
-		dbg!(&node);
-		dbg!(string);
 	}
 
 	parse_tree_recursive(&arena, &mut queue, &mut ast, &mut identifiers, &mut comments, &mut documentations);
@@ -73,8 +69,6 @@ fn parse_tree_recursive<'a>(
 		for inner in pair.clone().into_inner() {
 			queue_inner.push(inner);
 		}
-		dbg!(rule);
-		dbg!(string);
 		ast.push(node);
 	}
 
