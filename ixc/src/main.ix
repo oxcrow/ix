@@ -10,5 +10,5 @@
 
 fn hereBeThineCode() usize {
 	let x = 1
-	x
+	return x
 }

@@ -31,13 +31,14 @@ file = { SOI ~ use* ~ (!doc ~ comment|entities)* ~ EOI}
 use = { start ~ "use" ~ id ~ (("." ~ id)+)? ~ ("as" ~ id)? ~  end}
 
 entities = { module|function|struct }
-expressions = { assignment|expression }
+expressions = { assignment|return|expression }
 
 module = { start ~ doc* ~ scope? ~ "module" ~ id ~ "{" ~ (entities)* ~ "}" ~ end }
 function = { start ~ doc* ~ scope? ~ "fn" ~ id ~ "(" ~ ")" ~ ":"? ~ type? ~ "{" ~ (!doc ~ comment|expressions)* ~"}" ~ end }
 struct = { start ~ doc* ~ scope? ~ "struct" ~ id ~ "{" ~ value+ ~ "}" ~ end }
 
 assignment = { start ~ "let" ~ idx ~ assignment_specifier ~ digit+ ~ ";"? ~ end }
+return = { start ~ "return" ~ expression ~ end }
 value = { start ~ doc* ~ scope? ~ ids ~ ":"? ~ type ~ ","? ~ end }
 expression = { idx }
 
