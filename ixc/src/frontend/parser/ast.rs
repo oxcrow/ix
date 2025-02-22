@@ -152,6 +152,7 @@ pub enum Nodes {
 	Str,
 	Start,
 	End,
+	Unknown,
 }
 
 pub fn calculate_ast_signature_step1<'arena>(
