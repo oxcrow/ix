@@ -4,6 +4,7 @@ use anyhow::Result;
 use pest::Parser;
 use pest_derive::Parser;
 //
+use pest::iterators::Pair;
 use pest::iterators::Pairs;
 
 use crate::core::arena::Arena;
@@ -29,29 +30,31 @@ pub fn parse_tree<'arena>(mut arena: Arena::Allocator, tree: Pairs<'arena, Rule>
 	let mut documentations = Arena::Vec::<&'arena str>::new_in(&arena);
 	let mut comments = Arena::Vec::<&'arena str>::new_in(&arena);
 
-	fn parse<'arena>(
-		tree: Pairs<'arena, Rule>,
-		ast: &mut Arena::Vec<Nodes>,
-		identifiers: &mut Arena::Vec<&'arena str>,
-		comments: &mut Arena::Vec<&'arena str>,
-		documentations: &mut Arena::Vec<&'arena str>,
-	) {
-		for pair in tree {
-			let rule = pair.as_rule();
-
-			for inner in pair.into_inner() {
-				let rule = inner.as_rule();
-				// parse(tree, ast, identifiers, documentations, comments);
-				dbg!(rule);
-			}
-
-			dbg!(rule);
-		}
-	}
-
-	parse(tree, &mut ast, &mut identifiers, &mut comments, &mut documentations);
+	let mut arena = parse_tree_recursive(&arena, tree, &mut ast, &mut identifiers, &mut comments, &mut documentations);
 
 	Ok(())
+}
+
+fn parse_tree_recursive<'arena>(
+	arena: &'arena Arena::Allocator,
+	tree: Pairs<'arena, Rule>,
+	ast: &mut Arena::Vec<Nodes>,
+	identifiers: &mut Arena::Vec<&'arena str>,
+	comments: &mut Arena::Vec<&'arena str>,
+	documentations: &mut Arena::Vec<&'arena str>,
+) {
+	let mut queue = Arena::Vec::<Pair<'arena, Rule>>::new_in(&arena);
+	for pair in tree {
+		let rule = pair.as_rule();
+		for inner in pair.into_inner() {
+			queue.push(inner);
+		}
+		dbg!(rule);
+	}
+
+	for inner in queue {
+		parse_tree_recursive(arena, tree, ast, identifiers, documentations, comments);
+	}
 }
 
 #[cfg(test)]
