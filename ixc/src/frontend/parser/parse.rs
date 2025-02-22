@@ -92,7 +92,10 @@ fn rule_to_node(rule: Rule) -> Nodes {
 		| Rule::comment => Nodes::Comment,
 		| Rule::function => Nodes::Function,
 		| Rule::visible => Nodes::Visible,
+		| Rule::hidden => Nodes::Hidden,
 		| Rule::id => Nodes::Identifier,
+		| Rule::start => Nodes::Start,
+		| Rule::end => Nodes::End,
 		| _ => Nodes::Unknown,
 	}
 }
