@@ -80,6 +80,9 @@ fn parse_tree_recursive<'a>(
 				| Nodes::Comment => {
 					comments.push(string);
 				}
+				| Nodes::Identifier => {
+					identifiers.push(string);
+				}
 				| _ => {}
 			}
 		}
