@@ -24,13 +24,13 @@ pub fn parse_string(source: &str) -> Result<Pairs<'_, Rule>> {
 }
 
 /// Parse the parse tree and create an Abstract Syntax Tree (AST)
-pub fn parse_tree<'arena>(mut arena: Arena::Allocator, tree: Pairs<'arena, Rule>) -> Result<()> {
+pub fn parse_tree<'a>(mut arena: Arena::Allocator, tree: Pairs<'a, Rule>) -> Result<()> {
 	let mut ast = Arena::Vec::<Nodes>::new_in(&arena);
-	let mut identifiers = Arena::Vec::<&'arena str>::new_in(&arena);
-	let mut documentations = Arena::Vec::<&'arena str>::new_in(&arena);
-	let mut comments = Arena::Vec::<&'arena str>::new_in(&arena);
+	let mut identifiers = Arena::Vec::<&'a str>::new_in(&arena);
+	let mut documentations = Arena::Vec::<&'a str>::new_in(&arena);
+	let mut comments = Arena::Vec::<&'a str>::new_in(&arena);
 
-	let mut queue = Arena::Vec::<Pair<'arena, Rule>>::new_in(&arena);
+	let mut queue = Arena::Vec::<Pair<'a, Rule>>::new_in(&arena);
 
 	for pair in tree {
 		let rule = pair.as_rule();
@@ -47,19 +47,19 @@ pub fn parse_tree<'arena>(mut arena: Arena::Allocator, tree: Pairs<'arena, Rule>
 	Ok(())
 }
 
-fn parse_tree_recursive<'arena>(
-	arena: &'arena Arena::Allocator,
-	queue: &mut Arena::Vec<Pair<'arena, Rule>>,
+fn parse_tree_recursive<'a>(
+	arena: &'a Arena::Allocator,
+	queue: &mut Arena::Vec<Pair<'a, Rule>>,
 	ast: &mut Arena::Vec<Nodes>,
-	identifiers: &mut Arena::Vec<&'arena str>,
-	comments: &mut Arena::Vec<&'arena str>,
-	documentations: &mut Arena::Vec<&'arena str>,
+	identifiers: &mut Arena::Vec<&'a str>,
+	comments: &mut Arena::Vec<&'a str>,
+	documentations: &mut Arena::Vec<&'a str>,
 ) {
 	if queue.is_empty() {
 		return;
 	}
 
-	let mut queue_inner = Arena::Vec::<Pair<'arena, Rule>>::new_in(&arena);
+	let mut queue_inner = Arena::Vec::<Pair<'a, Rule>>::new_in(&arena);
 
 	for pair in queue.iter() {
 		let rule = pair.as_rule();
