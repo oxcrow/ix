@@ -15,7 +15,8 @@ alphabet = _{ 'a'..'z' | 'A'..'Z' }
 underscore = _{ "_" }
 digit = _{ '0'..'9' }
 
-id = @{ (alphabet|underscore) ~ (alphabet|digit|underscore)* ~ ("'")* }
+id = @{ (alphabet|underscore) ~ (alphabet|digit|underscore)* }
+idx = @{ (alphabet|underscore) ~ (alphabet|digit|underscore)* ~ ("'")* }
 ids = { id ~ ("," ~ id)* }
 
 //
@@ -34,9 +35,9 @@ module = { start ~ doc* ~ scope? ~ "module" ~ id ~ "{" ~ (entities)* ~ "}" ~ end
 function = { start ~ doc* ~ scope? ~ "fn" ~ id ~ "(" ~ ")" ~ ":"? ~ type? ~ "{" ~ (!doc ~ comment|expressions)* ~"}" ~ end }
 struct = { start ~ doc* ~ scope? ~ "struct" ~ id ~ "{" ~ value+ ~ "}" ~ end }
 
-assignment = { start ~ "let" ~ id ~ assignment_specifier ~ digit+ ~ ";"? ~ end }
+assignment = { start ~ "let" ~ idx ~ assignment_specifier ~ digit+ ~ ";"? ~ end }
 value = { start ~ doc* ~ scope? ~ ids ~ ":"? ~ type ~ ","? ~ end }
-expression = { id }
+expression = { idx }
 
 scope = _{ visible | hidden }
 visible = { "vis" }
