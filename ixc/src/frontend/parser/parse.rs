@@ -37,11 +37,11 @@ pub fn parse_tree<'arena>(mut arena: Arena::Allocator, tree: Pairs<'arena, Rule>
 		for inner in pair.into_inner() {
 			queue.push(inner);
 		}
-		dbg!(rule);
 	}
 
 	parse_tree_recursive(&arena, &mut queue, &mut ast, &mut identifiers, &mut comments, &mut documentations);
 
+	dbg!(&ast);
 	Ok(())
 }
 
@@ -61,10 +61,14 @@ fn parse_tree_recursive<'arena>(
 
 	for pair in queue.iter() {
 		let rule = pair.as_rule();
+		let node = match rule {
+			| Rule::function => Nodes::Function,
+			| _ => Nodes::Hidden,
+		};
 		for inner in pair.clone().into_inner() {
 			queue_inner.push(inner);
 		}
-		dbg!(rule);
+		ast.push(node);
 	}
 
 	queue.clear();
