@@ -24,20 +24,23 @@ ids = { id ~ ("," ~ id)* }
 
 file = { SOI ~ (!doc ~ comment|entities)* ~ EOI}
 
+start = { "" }
+end = { "" }
+
 entities = { module|function|struct }
 expressions = { assignment|expression }
 
-module = { doc* ~ scope? ~ "module" ~ id ~ "{" ~ (entities)* ~ "}" }
-function = { doc* ~ scope? ~ "fn" ~ id ~ "(" ~ ")" ~ ":"? ~ type? ~ "{" ~ (!doc ~ comment|expressions)* ~"}" }
-struct = { doc* ~ scope? ~ "struct" ~ id ~ "{" ~ value+ ~ "}"}
+module = { start ~ doc* ~ scope? ~ "module" ~ id ~ "{" ~ (entities)* ~ "}" ~ end }
+function = { start ~ doc* ~ scope? ~ "fn" ~ id ~ "(" ~ ")" ~ ":"? ~ type? ~ "{" ~ (!doc ~ comment|expressions)* ~"}" ~ end }
+struct = { start ~ doc* ~ scope? ~ "struct" ~ id ~ "{" ~ value+ ~ "}" ~ end }
 
-assignment = { "let" ~ id ~ assignment_specifier ~ digit+ ~ ";"? }
-value = { doc* ~ scope? ~ ids ~ ":"? ~ type ~ ","? }
+assignment = { start ~ "let" ~ id ~ assignment_specifier ~ digit+ ~ ";"? ~ end }
+value = { start ~ doc* ~ scope? ~ ids ~ ":"? ~ type ~ ","? ~ end }
 expression = { id }
 
-scope = _{ global|static }
-global = { "vis" }
-static = { "" }
+scope = _{ visible | hidden }
+visible = { "vis" }
+hidden = { "" }
 
 assignment_specifier = _{ constant_assignment | variable_assignment }
 constant_assignment = { "=" }
