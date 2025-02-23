@@ -22,6 +22,12 @@ ids = { id ~ ("," ~ id)* }
 integer = @{ digit+ }
 floating = @{ (digit+ ~ "." ~ digit+) | (digit+ ~ "." ~ digit+ ~ "E" ~ ("+"|"-") ~ digit+) }
 
+plus = { "+" }
+minus = {  "-" }
+star = { "*" }
+slash = { "/" }
+starstar = { "**" }
+
 //
 // Grammar
 //
@@ -39,7 +45,7 @@ struct = { doc* ~ scope? ~ "struct" ~ id ~ "{" ~ value+ ~ "}" }
 assignment = { "let" ~ idx ~ assignment_specifier ~ expression ~ ";"? }
 return = { "return" ~ expression }
 value = { doc* ~ scope? ~ ids ~ ":"? ~ type ~ ","? }
-expression = { idx|integer|floating }
+expression = { ((idx|integer|floating) ~ ((plus|minus|star|slash|starstar) ~ (idx|integer|floating))+) | (idx|integer|floating) }
 
 scope = _{ visible | hidden }
 visible = { "vis" }
