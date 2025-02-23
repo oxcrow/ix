@@ -10,6 +10,7 @@
 
 /// Driver code
 fn hereBeThineCode() usize {
+    // boo
     let x = 1
     x
 }

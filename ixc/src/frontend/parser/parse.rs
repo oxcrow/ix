@@ -78,7 +78,16 @@ fn parse_tree_recursive<'a>(
                 parse_tree_recursive(arena, &mut queue_inner, ast, identifiers, comments, documentations);
                 ast.push(Nodes::EndFunction);
             }
-            | Nodes::Struct => ast.push(Nodes::StartStruct),
+            | Nodes::Struct => {
+                ast.push(Nodes::StartStruct);
+                parse_tree_recursive(arena, &mut queue_inner, ast, identifiers, comments, documentations);
+                ast.push(Nodes::EndStruct);
+            }
+            | Nodes::Expressions => {
+                ast.push(Nodes::StartExpression);
+                parse_tree_recursive(arena, &mut queue_inner, ast, identifiers, comments, documentations);
+                ast.push(Nodes::EndExpression);
+            }
             | _ => {}
         }
 
@@ -94,6 +103,18 @@ fn parse_tree_recursive<'a>(
             | Nodes::Identifier => {
                 ast.push(node);
                 identifiers.push(string);
+            }
+            | Nodes::Assignment => {
+                ast.push(node);
+            }
+            | Nodes::ConstantAssignment => {
+                ast.push(node);
+            }
+            | Nodes::VariableAssignment => {
+                ast.push(node);
+            }
+            | Nodes::Usize => {
+                ast.push(node);
             }
             | _ => {}
         }
@@ -118,10 +139,14 @@ fn convert_rule_to_node(rule: Rule) -> Nodes {
         | Rule::comment => Nodes::Comment,
         | Rule::function => Nodes::Function,
         | Rule::r#return => Nodes::Return,
+        | Rule::expressions => Nodes::Expressions,
         | Rule::expression => Nodes::Expression,
+        | Rule::assignment => Nodes::Assignment,
+        | Rule::constant_assignment => Nodes::ConstantAssignment,
+        | Rule::variable_assignment => Nodes::VariableAssignment,
         | Rule::visible => Nodes::Visible,
         | Rule::hidden => Nodes::Hidden,
-        | Rule::id => Nodes::Identifier,
+        | Rule::id | Rule::idx => Nodes::Identifier,
         | Rule::usize => Nodes::Usize,
         | _ => Nodes::Unknown,
     }
