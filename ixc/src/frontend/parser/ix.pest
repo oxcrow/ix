@@ -19,6 +19,9 @@ id = @{ (alphabet|underscore) ~ (alphabet|digit|underscore)* }
 idx = @{ (alphabet|underscore) ~ (alphabet|digit|underscore)* ~ ("'")* }
 ids = { id ~ ("," ~ id)* }
 
+integer = _{ digit+ }
+floating = _{ (digit+ ~ "." ~ digit+) | (digit+ ~ "." ~ digit+ ~ "E" ~ digit+) }
+
 //
 // Grammar
 //
@@ -33,10 +36,10 @@ module = { doc* ~ scope? ~ "module" ~ id ~ "{" ~ (entities)* ~ "}" }
 function = { doc* ~ scope? ~ "fn" ~ id ~ "(" ~ ")" ~ ":"? ~ type? ~ "{" ~ (!doc ~ comment|expressions)* ~"}" }
 struct = { doc* ~ scope? ~ "struct" ~ id ~ "{" ~ value+ ~ "}" }
 
-assignment = { "let" ~ idx ~ assignment_specifier ~ digit+ ~ ";"? }
+assignment = { "let" ~ idx ~ assignment_specifier ~ expression ~ ";"? }
 return = { "return" ~ expression }
 value = { doc* ~ scope? ~ ids ~ ":"? ~ type ~ ","? }
-expression = { idx }
+expression = { idx|integer|floating }
 
 scope = _{ visible | hidden }
 visible = { "vis" }
