@@ -67,27 +67,17 @@ fn parse_tree_recursive<'a>(
             queue_inner.push(inner);
         }
 
-        if node.is_module() || node.is_function() || node.is_struct() {
-            dbg!(&node);
+        match node {
+            | Nodes::Module => ast.push(Nodes::StartModule),
+            | Nodes::Function => ast.push(Nodes::StartFunction),
+            | Nodes::Struct => ast.push(Nodes::StartStruct),
+            | _ => {}
         }
 
-        /*
-        if node != Nodes::Unknown {
-            ast.push(node);
-            match node {
-                | Nodes::Documentation => {
-                    documentations.push(string);
-                }
-                | Nodes::Comment => {
-                    comments.push(string);
-                }
-                | Nodes::Identifier => {
-                    identifiers.push(string);
-                }
-                | _ => {}
-            }
+        if node.is_module() || node.is_function() || node.is_struct() {
+            dbg!(&node);
+            dbg!(pair);
         }
-        */
     }
 
     queue.clear();
