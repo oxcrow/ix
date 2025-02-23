@@ -13,20 +13,20 @@ use anyhow::Result;
 ///
 /// However this will be slow if there are too many identifiers in a file.
 pub fn search_identifier<'a, 'b>(string: &'a str, strings_in_environment: &'b [&str]) -> Option<&'a str> {
-	'search: for other_string in strings_in_environment.iter() {
-		// Optimisation: No need to search if string lengths do not match.
-		if string.len() != other_string.len() {
-			continue 'search;
-		}
-		// Optimisation: No need to continue searching if characters do not match.
-		for (a, b) in itertools::izip!(string.chars(), other_string.chars()) {
-			if a != b {
-				continue 'search;
-			}
-		}
-		// We found the string!
-		return Some(string);
-	}
-	// We found nothing :/
-	None
+    'search: for other_string in strings_in_environment.iter() {
+        // Optimisation: No need to search if string lengths do not match.
+        if string.len() != other_string.len() {
+            continue 'search;
+        }
+        // Optimisation: No need to continue searching if characters do not match.
+        for (a, b) in itertools::izip!(string.chars(), other_string.chars()) {
+            if a != b {
+                continue 'search;
+            }
+        }
+        // We found the string!
+        return Some(string);
+    }
+    // We found nothing :/
+    None
 }

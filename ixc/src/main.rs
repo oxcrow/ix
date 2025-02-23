@@ -17,24 +17,24 @@ mod core;
 mod frontend;
 
 fn header() {
-	println!("* ix *");
+    println!("* ix *");
 }
 
 fn dev() -> Result<()> {
-	Ok(())
+    Ok(())
 }
 
 fn main() -> Result<()> {
-	use crate::frontend::parser::parse;
-	header();
+    use crate::frontend::parser::parse;
+    header();
 
-	// Read code from file and compile it
-	// Note: We should try to compile incrementally.
-	let arena = Arena::Allocator::with_capacity(1e+7 as usize);
-	let code = std::fs::read_to_string("src/main.ix")?;
-	let tree = parse::parse_string(&code)?;
-	let ast = parse::parse_tree(arena, tree)?;
+    // Read code from file and compile it
+    // Note: We should try to compile incrementally.
+    let arena = Arena::Allocator::with_capacity(1e+7 as usize);
+    let code = std::fs::read_to_string("src/main.ix")?;
+    let tree = parse::parse_string(&code)?;
+    let ast = parse::parse_tree(arena, tree)?;
 
-	dev()?;
-	Ok(())
+    dev()?;
+    Ok(())
 }

@@ -1,5 +1,3 @@
-# never use tabs
-hard_tabs = true
 # number of spaces to use per tab
 tab_spaces = 4
 # always use unix line endings
