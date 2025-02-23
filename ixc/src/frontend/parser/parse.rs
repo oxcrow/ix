@@ -93,7 +93,6 @@ fn parse_tree_recursive<'a>(
                 parse_tree_recursive(arena, &mut queue_inner, ast, identifiers, comments, documentations);
                 ast.push(Nodes::EndExpression);
             }
-            | Nodes::Unknown => {}
             | Nodes::Documentation => {
                 ast.push(node);
                 documentations.push(string);
@@ -110,6 +109,7 @@ fn parse_tree_recursive<'a>(
                 ast.push(node);
                 identifiers.push(string);
             }
+            | Nodes::Unknown => {}
             | _ => {
                 ast.push(node);
             }
