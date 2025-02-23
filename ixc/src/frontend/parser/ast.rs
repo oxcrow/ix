@@ -147,6 +147,7 @@ pub enum Nodes {
     Argument,
     Block,
     Identifier,
+    //
     Unit,
     Usize,
     Float,
@@ -161,6 +162,18 @@ pub enum Nodes {
     U64,
     F32,
     F64,
+    //
+    StartModule,
+    EndModule,
+    StartFunction,
+    EndFunction,
+    StartStruct,
+    EndStruct,
+    StartStatement,
+    EndStatement,
+    StartExpression,
+    EndExpression,
+    //
     Unknown,
 }
 
