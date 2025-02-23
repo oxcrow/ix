@@ -84,9 +84,9 @@ fn parse_tree_recursive<'a>(
                 ast.push(Nodes::EndStruct);
             }
             | Nodes::Expressions => {
-                ast.push(Nodes::StartExpression);
+                ast.push(Nodes::StartStatement);
                 parse_tree_recursive(arena, &mut queue_inner, ast, identifiers, comments, documentations);
-                ast.push(Nodes::EndExpression);
+                ast.push(Nodes::EndStatement);
             }
             | _ => {}
         }

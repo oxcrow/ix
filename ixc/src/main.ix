@@ -10,6 +10,6 @@
 
 /// Driver code
 fn hereBeThineCode() usize {
-    let x = 1 
+    let x = 1
     x
 }

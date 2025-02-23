@@ -174,8 +174,6 @@ pub enum Nodes {
     EndStruct,
     StartStatement,
     EndStatement,
-    StartExpression,
-    EndExpression,
     //
     Unknown,
 }
