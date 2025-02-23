@@ -9,7 +9,7 @@
 // should try to write simple code without optimizing too much.
 
 /// Driver code
-fn hereBeThineCode() usize {
+fn hereBeThineCode() {
     let x = 1 + 1 - 1**2
     x
 }

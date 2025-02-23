@@ -94,6 +94,22 @@ fn parse_tree_recursive<'a>(
                 ast.push(Nodes::EndExpression);
             }
             | Nodes::Unknown => {}
+            | Nodes::Documentation => {
+                ast.push(node);
+                documentations.push(string);
+            }
+            | Nodes::Comment => {
+                ast.push(node);
+                comments.push(string);
+            }
+            | Nodes::Identifier => {
+                ast.push(node);
+                identifiers.push(string);
+            }
+            | Nodes::IntVal => {
+                ast.push(node);
+                identifiers.push(string);
+            }
             | _ => {
                 ast.push(node);
             }
