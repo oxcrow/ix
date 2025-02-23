@@ -66,6 +66,12 @@ fn parse_tree_recursive<'a>(
 		for inner in pair.clone().into_inner() {
 			queue_inner.push(inner);
 		}
+
+		if node.is_module() || node.is_function() || node.is_struct() {
+			dbg!(&node);
+		}
+
+		/*
 		if node != Nodes::Unknown {
 			ast.push(node);
 			match node {
@@ -81,6 +87,7 @@ fn parse_tree_recursive<'a>(
 				| _ => {}
 			}
 		}
+		*/
 	}
 
 	queue.clear();
