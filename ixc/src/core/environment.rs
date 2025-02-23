@@ -12,7 +12,7 @@ use anyhow::Result;
 /// It is better for us to do a linear search over a list of strings and find our intended identifer.
 ///
 /// However this will be slow if there are too many identifiers in a file.
-pub fn search_identifier<'a, 'b>(string: &'a str, strings_in_environment: &'b [&str]) -> Option<&'a str> {
+pub fn search_identifier<'a>(string: &'a str, strings_in_environment: &'a [&str]) -> Option<&'a str> {
     'search: for other_string in strings_in_environment.iter() {
         // Optimisation: No need to search if string lengths do not match.
         if string.len() != other_string.len() {
