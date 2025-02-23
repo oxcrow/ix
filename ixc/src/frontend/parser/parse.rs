@@ -12,6 +12,8 @@ use crate::core::arena::Arena;
 use crate::frontend::parser::ast::Ast;
 use crate::frontend::parser::ast::Nodes;
 
+use super::ast;
+
 // Ix parser created from pest grammar
 #[derive(Parser)]
 #[grammar = "src/frontend/parser/ix.pest"]
@@ -42,6 +44,7 @@ pub fn parse_tree<'a>(mut arena: Arena::Allocator, tree: Pairs<'a, Rule>) -> Res
 
     parse_tree_recursive(&arena, &mut queue, &mut ast, &mut identifiers, &mut comments, &mut documentations);
 
+    dbg!(&ast);
     Ok(())
 }
 
@@ -69,8 +72,28 @@ fn parse_tree_recursive<'a>(
 
         match node {
             | Nodes::Module => ast.push(Nodes::StartModule),
-            | Nodes::Function => ast.push(Nodes::StartFunction),
+            | Nodes::Function => {
+                ast.push(Nodes::StartFunction);
+                parse_tree_recursive(arena, &mut queue_inner, ast, identifiers, comments, documentations);
+                ast.push(Nodes::EndFunction);
+            }
             | Nodes::Struct => ast.push(Nodes::StartStruct),
+            | _ => {}
+        }
+
+        match node {
+            | Nodes::Documentation => {
+                ast.push(node);
+                documentations.push(string);
+            }
+            | Nodes::Comment => {
+                ast.push(node);
+                comments.push(string);
+            }
+            | Nodes::Identifier => {
+                ast.push(node);
+                identifiers.push(string);
+            }
             | _ => {}
         }
 
