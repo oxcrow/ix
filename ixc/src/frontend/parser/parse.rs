@@ -127,6 +127,7 @@ fn convert_rule_to_node(rule: Rule) -> Nodes {
         | Rule::visible => Nodes::Visible,
         | Rule::hidden => Nodes::Hidden,
         | Rule::id | Rule::idx => Nodes::Identifier,
+        | Rule::unit => Nodes::Unit,
         | Rule::usize => Nodes::Usize,
         | Rule::plus => Nodes::Plus,
         | Rule::minus => Nodes::Minus,
