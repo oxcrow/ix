@@ -88,6 +88,11 @@ fn parse_tree_recursive<'a>(
                 parse_tree_recursive(arena, &mut queue_inner, ast, identifiers, comments, documentations);
                 ast.push(Nodes::EndStatement);
             }
+            | Nodes::Expression => {
+                ast.push(Nodes::StartExpression);
+                parse_tree_recursive(arena, &mut queue_inner, ast, identifiers, comments, documentations);
+                ast.push(Nodes::EndExpression);
+            }
             | _ => {}
         }
 

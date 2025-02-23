@@ -20,7 +20,7 @@ idx = @{ (alphabet|underscore) ~ (alphabet|digit|underscore)* ~ ("'")* }
 ids = { id ~ ("," ~ id)* }
 
 integer = @{ digit+ }
-floating = @{ (digit+ ~ "." ~ digit+) | (digit+ ~ "." ~ digit+ ~ "E" ~ digit+) }
+floating = @{ (digit+ ~ "." ~ digit+) | (digit+ ~ "." ~ digit+ ~ "E" ~ ("+"|"-") ~ digit+) }
 
 //
 // Grammar
