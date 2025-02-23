@@ -93,42 +93,10 @@ fn parse_tree_recursive<'a>(
                 parse_tree_recursive(arena, &mut queue_inner, ast, identifiers, comments, documentations);
                 ast.push(Nodes::EndExpression);
             }
-            | _ => {}
-        }
-
-        match node {
-            | Nodes::Documentation => {
-                ast.push(node);
-                documentations.push(string);
-            }
-            | Nodes::Comment => {
-                ast.push(node);
-                comments.push(string);
-            }
-            | Nodes::Identifier => {
-                ast.push(node);
-                identifiers.push(string);
-            }
-            | Nodes::Assignment => {
+            | Nodes::Unknown => {}
+            | _ => {
                 ast.push(node);
             }
-            | Nodes::ConstantAssignment => {
-                ast.push(node);
-            }
-            | Nodes::VariableAssignment => {
-                ast.push(node);
-            }
-            | Nodes::Plus | Nodes::Minus | Nodes::Star | Nodes::Slash | Nodes::StarStar => {
-                ast.push(node);
-            }
-            | Nodes::IntVal | Nodes::FloatVal => {
-                ast.push(node);
-                identifiers.push(string);
-            }
-            | Nodes::Usize => {
-                ast.push(node);
-            }
-            | _ => {}
         }
 
         if node.is_module() || node.is_function() || node.is_struct() {
