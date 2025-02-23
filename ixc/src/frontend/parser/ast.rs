@@ -151,14 +151,6 @@ pub enum Nodes {
 	Usize,
 	Float,
 	Str,
-	Start,
-	End,
-	StartModule,
-	EndModule,
-	StartFunction,
-	EndFunction,
-	StartStruct,
-	EndStruct,
 	Unknown,
 }
 

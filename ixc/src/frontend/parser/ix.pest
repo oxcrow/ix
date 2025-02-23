@@ -19,32 +19,23 @@ id = @{ (alphabet|underscore) ~ (alphabet|digit|underscore)* }
 idx = @{ (alphabet|underscore) ~ (alphabet|digit|underscore)* ~ ("'")* }
 ids = { id ~ ("," ~ id)* }
 
-start = { "" }
-end = { "" }
-start_module = { "" }
-end_module  = { "" }
-start_function = { "" }
-end_function = { "" }
-start_struct = { "" }
-end_struct = { "" }
-
 //
 // Grammar
 //
 
 file = { SOI ~ use* ~ (!doc ~ comment|entities)* ~ EOI}
 
-use = { start ~ "use" ~ id ~ (("." ~ id)+)? ~ ("as" ~ id)? ~  end}
+use = { "use" ~ id ~ (("." ~ id)+)? ~ ("as" ~ id)? }
 entities = { module|function|struct }
 expressions = { assignment|return }
 
-module = { start_module ~ doc* ~ scope? ~ "module" ~ id ~ "{" ~ (entities)* ~ "}" ~ end_module }
-function = { start_function ~ doc* ~ scope? ~ "fn" ~ id ~ "(" ~ ")" ~ ":"? ~ type? ~ "{" ~ (!doc ~ comment|expressions)* ~"}" ~ end_function }
-struct = { start_struct ~ doc* ~ scope? ~ "struct" ~ id ~ "{" ~ value+ ~ "}" ~ end_struct }
+module = { doc* ~ scope? ~ "module" ~ id ~ "{" ~ (entities)* ~ "}" }
+function = { doc* ~ scope? ~ "fn" ~ id ~ "(" ~ ")" ~ ":"? ~ type? ~ "{" ~ (!doc ~ comment|expressions)* ~"}" }
+struct = { doc* ~ scope? ~ "struct" ~ id ~ "{" ~ value+ ~ "}" }
 
-assignment = { start ~ "let" ~ idx ~ assignment_specifier ~ digit+ ~ ";"? ~ end }
-return = { start ~ "return" ~ expression ~ end }
-value = { start ~ doc* ~ scope? ~ ids ~ ":"? ~ type ~ ","? ~ end }
+assignment = { "let" ~ idx ~ assignment_specifier ~ digit+ ~ ";"? }
+return = { "return" ~ expression }
+value = { doc* ~ scope? ~ ids ~ ":"? ~ type ~ ","? }
 expression = { idx }
 
 scope = _{ visible | hidden }
@@ -58,6 +49,16 @@ variable_assignment = { ":=" }
 unit = { "(" ~ ")" }
 usize = { "usize" }
 float = { "float" }
-string = { "string" }
+str = { "str" }
+i8 = { "i8" }
+u8 = { "u8" }
+i16 = { "i16" }
+u16 = { "u16" }
+i32 = { "i32" }
+u32 = { "u32" }
+i64 = { "i64" }
+u64 = { "u64" }
+f32 = { "f32" }
+f64 = { "f64" }
 
-type = _{ unit | usize | float | string }
+type = _{ unit | usize | float | str | i8 | u8 | i16 | u16 | i32 | u32 | i64 | u64 | f32 | f64 }

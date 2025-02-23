@@ -102,10 +102,6 @@ fn rule_to_node(rule: Rule) -> Nodes {
 		| Rule::hidden => Nodes::Hidden,
 		| Rule::id => Nodes::Identifier,
 		| Rule::usize => Nodes::Usize,
-		| Rule::start => Nodes::Start,
-		| Rule::end => Nodes::End,
-		| Rule::start_function => Nodes::StartFunction,
-		| Rule::end_function => Nodes::EndFunction,
 		| _ => Nodes::Unknown,
 	}
 }
