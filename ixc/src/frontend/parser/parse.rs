@@ -118,6 +118,13 @@ fn parse_tree_recursive<'a>(
             | Nodes::VariableAssignment => {
                 ast.push(node);
             }
+            | Nodes::Plus | Nodes::Minus | Nodes::Star | Nodes::Slash | Nodes::StarStar => {
+                ast.push(node);
+            }
+            | Nodes::IntVal | Nodes::FloatVal => {
+                ast.push(node);
+                identifiers.push(string);
+            }
             | Nodes::Usize => {
                 ast.push(node);
             }
@@ -153,6 +160,13 @@ fn convert_rule_to_node(rule: Rule) -> Nodes {
         | Rule::hidden => Nodes::Hidden,
         | Rule::id | Rule::idx => Nodes::Identifier,
         | Rule::usize => Nodes::Usize,
+        | Rule::plus => Nodes::Plus,
+        | Rule::minus => Nodes::Minus,
+        | Rule::star => Nodes::Star,
+        | Rule::slash => Nodes::Slash,
+        | Rule::starstar => Nodes::StarStar,
+        | Rule::integer => Nodes::IntVal,
+        | Rule::floating => Nodes::FloatVal,
         | _ => Nodes::Unknown,
     }
 }

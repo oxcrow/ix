@@ -150,6 +150,13 @@ pub enum Nodes {
     Argument,
     Block,
     Identifier,
+    Plus,
+    Minus,
+    Star,
+    Slash,
+    StarStar,
+    IntVal,
+    FloatVal,
     //
     Unit,
     Usize,
