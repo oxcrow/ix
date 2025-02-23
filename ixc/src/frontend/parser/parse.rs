@@ -65,7 +65,7 @@ fn parse_tree_recursive<'a>(
 
     for pair in queue.iter() {
         let rule = pair.as_rule();
-        let node = rule_to_node(rule);
+        let node = convert_rule_to_node(rule);
         let string = pair.as_str();
         for inner in pair.clone().into_inner() {
             queue_inner.push(inner);
@@ -112,7 +112,7 @@ fn parse_tree_recursive<'a>(
     parse_tree_recursive(arena, queue, ast, identifiers, documentations, comments);
 }
 
-fn rule_to_node(rule: Rule) -> Nodes {
+fn convert_rule_to_node(rule: Rule) -> Nodes {
     match rule {
         | Rule::doc => Nodes::Documentation,
         | Rule::comment => Nodes::Comment,
