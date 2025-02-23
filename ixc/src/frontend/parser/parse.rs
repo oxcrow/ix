@@ -45,6 +45,7 @@ pub fn parse_tree<'a>(mut arena: Arena::Allocator, tree: Pairs<'a, Rule>) -> Res
     parse_tree_recursive(&arena, &mut queue, &mut ast, &mut identifiers, &mut comments, &mut documentations);
 
     dbg!(&ast);
+    dbg!(&identifiers);
     Ok(())
 }
 

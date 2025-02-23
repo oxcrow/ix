@@ -11,5 +11,5 @@
 /// Driver code
 fn hereBeThineCode() usize {
     let x = 1
-    return x
+    ~x
 }
