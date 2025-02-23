@@ -8,11 +8,8 @@
 // Performance does not matter for the bootstrap compiler thus we
 // should try to write simple code without optimizing too much.
 
-fn add() i32 {
-}
-
 /// Driver code
 fn hereBeThineCode() usize {
-	let x = 99
-	return x
+    let x = 1
+    return x
 }
